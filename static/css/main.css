@@ -1,0 +1,135 @@
+@font-face {
+    font-family: Poppins-Regular;
+    src: url(../fonts/poppins/Poppins-Regular.ttf)
+}
+
+@font-face {
+    font-family: Poppins-Bold;
+    src: url(../fonts/poppins/Poppins-Bold.ttf)
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body,
+html {
+    height: 100%;
+    font-family: sans-serif
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    margin: 0;
+    transition: all .4s;
+    -webkit-transition: all .4s;
+    -o-transition: all .4s;
+    -moz-transition: all .4s;
+}
+
+a:focus {
+    outline: none !important
+}
+
+a:hover {
+    text-decoration: none
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0
+}
+
+p {
+    margin: 0
+}
+
+ul,
+li {
+    margin: 0;
+    list-style-type: none
+}
+
+input {
+    display: block;
+    outline: none;
+    border: none !important
+}
+
+textarea {
+    display: block;
+    outline: none
+}
+
+textarea:focus,
+input:focus {
+    border-color: transparent !important
+}
+
+button {
+    outline: none !important;
+    border: none;
+    background: 0 0
+}
+
+button:hover {
+    cursor: pointer
+}
+
+.reset-input,
+.reset-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.reset-input:focus,
+.reset-btn:focus {
+    outline: 0;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0 0 0 0)
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+}
+
+:root {
+    --grey_fa: #fafafa;
+    --grey_70: #707070;
+    --blue: #26326b;
+}
+
+body {
+    font-family: 'Fira Sans', Verdana, Geneva, Tahoma, sans-serif;
+    background-color: var(--grey_fa);
+}
