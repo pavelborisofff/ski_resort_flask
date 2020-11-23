@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подъёмники</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/acts.css">
+    <link rel="stylesheet" href="../static/css/lifts.css">
+    <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
+    
+</head>
+<body>
+    <header class="header">
+        <div class="header__container container flex">
+            <a href="" class="header__logo logo">
+                <img src="../static/img/logo.png" alt="Rosa Khutor Logo" class="header__img">
+            </a>
+            <nav class="header__nav nav flex">
+                <ul class="nav__items flex">
+                    <li class="nav__item flex"><a href="weather.html" class="nav__link">Погода</a></li>
+                    <li class="nav__item flex active"><a href="lifts.html" class="nav__link">Подъёмники</a></li>
+                    <li class="nav__item flex"><a href="slopes.html" class="nav__link">Трассы</a></li>
+                    <li class="nav__item flex "><a href="acts.html" class="nav__link">Активности</a></li>
+                    <li class="nav__item flex"><a href="#" class="nav__link">Настройки</a></li>
+                </ul>
+            </nav>
+            <div class="header__sidenav flex">
+                <ul class="sidenav__items flex">
+                    <li class="nav__item flex"><a href="#" class="nav__link">Выход</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="main__container container">
+            <div class="main__header flex">
+                <h1 class="main__heading">Подъёмники</h1>
+                <form id="acts" action="" method="" class="main__buttons">
+                    <button class="main__button button reset-btn" value="Отменить">Отменить</button>
+                    <button class="main__button button reset-btn" value="Сохранить">Сохранить</button>
+                </form>
+            </div>
+            <div class="main__table table flex">
+                <div class="table__header flex">
+                    <div class="table__cell icon"></div>
+                    <div class="table__cell name">Название</div>
+                    <div class="table__cell open">Открытие</div>
+                    <div class="table__cell close">
+                        <span>Посадка до:</span><br>
+                        <div class="closed-desc flex"><small>наверх</small><small>вниз</small></div>
+                    </div>
+                    <!-- <div class="table__cell hours">Время работы</div> -->
+                    <div class="table__cell night">Вечернее<br>катание</div>
+                    <div class="table__cell state">Состояние</div>
+                    <div class="table__cell winter">Зима</div>
+                    <div class="table__cell change">Последнее изменение</div>
+                </div>
+                <!-- Олимпия -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Олимпия</div>
+                    <div class="table__cell open flex">
+                        <div class="open__desc"><small>для ГОД</small></div>
+                        <input type="text" name="from" id="tropa__from" placeholder="08:00" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="07:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="23:45" class="time ski" max="5"><div class="close__desc"><small>для ГОД</small></div>
+                        <div class="close__desc-str"><small>до Пика</small></div>                        
+                        <input type="text" name="from" id="tropa__from" placeholder="15:15" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="23:45" class="time" max="5">
+                        <div class="close__desc-str"><small>до Плато</small></div>
+                        <input type="text" name="from" id="tropa__from" placeholder="23:45" class="time ped" max="5"><div class="close__desc"><small>пешеход</small></div>
+                        <input type="text" name="from" id="tropa__from" placeholder="18:00" class="time ski" max="5"><div class="close__desc"><small>лыжник</small></div>                        
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="18:30" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="22:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" checked>
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Заповедный лес -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Заповедный лес</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="15:30" class="time ped" max="5"><div class="close__desc"><small>пешеход</small></div>
+                        <input type="text" name="from" id="tropa__from" placeholder="16:00" class="time ski" max="5"><div class="close__desc"><small>лыжник</small></div>                        
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa2" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa2" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa2" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa2" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" checked>
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Кавказский экспресс -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Кавказский экспресс</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:35" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="15:45" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:15" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa3" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa3" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa3" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa3" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" checked>
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Стрела -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TS.svg" alt=""> </div>
+                    <div class="table__cell name">Стрела</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="15:20" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:50" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa4" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa4" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa4" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa4" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" checked>
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Сказка -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Сказка</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa5" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa5" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa5" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa5" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Кабан -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TS.svg" alt=""> </div>
+                    <div class="table__cell name">Кабан</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:55" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:10" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa6" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa6" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa6" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa6" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Квартет -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Квартет</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:55" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:10" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa7" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa7" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa7" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa7" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" checked>
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Соло -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TS.svg" alt=""> </div>
+                    <div class="table__cell name">Соло</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:40" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa8" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa8" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa8" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa8" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Волчья скала -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Волчья скала</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa9" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa9" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa9" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa9" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" checked>
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Беседа -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TS.svg" alt=""> </div>
+                    <div class="table__cell name">Беседа</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa10" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa10" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa10" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa10" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Дриада -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Дриада</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:10" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa11" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa11" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa11" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa11" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Тундра -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TS.svg" alt=""> </div>
+                    <div class="table__cell name">Тундра</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="15:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa12" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa12" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa12" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa12" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Дафна -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Дафна</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:10" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5"><input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa13" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa13" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa13" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa13" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Шале -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TS.svg" alt=""> </div>
+                    <div class="table__cell name">Шале</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="19:00" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="22:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa14" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa14" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa14" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa14" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Ювента -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Ювента</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="19:00" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="22:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa15" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa15" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa15" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa15" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Экстрим -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TS.svg" alt=""> </div>
+                    <div class="table__cell name">Экстрим</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="19:00" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="22:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa16" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa16" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa16" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa16" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Крокус -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TC.svg" alt=""> </div>
+                    <div class="table__cell name">Крокус</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="09:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="15:10" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa17" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa17" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa17" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa17" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" checked>
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Эдельвейс -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TS.svg" alt=""> </div>
+                    <div class="table__cell name">Эдельвейс</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="09:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="15:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa18" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa18" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa18" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa18" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" checked>
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Бугели в Cноупарке -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/PARK.svg" alt=""> </div>
+                    <div class="table__cell name">Бугели в Cноупарке</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="09:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa19" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa19" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa19" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa19" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Бугель -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TK.svg" alt=""> </div>
+                    <div class="table__cell name">Бугель</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="09:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa20" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa20" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa20" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa20" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="" >
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Учебный склон-->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TR.svg" alt=""> </div>
+                    <div class="table__cell name">Учебный склон</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="08:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="19:00" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="22:45" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa21" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa21" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa21" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa21" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Детский склон-->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TR.svg" alt=""> </div>
+                    <div class="table__cell name">Детский склон</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="09:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="16:30" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa22" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa22" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa22" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa22" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+                <!-- Тюбинг -->
+                <div class="table__row flex">
+                    <div class="table__cell icon"> <img src="../static/img/lifts_icons/TK.svg" alt=""> </div>
+                    <div class="table__cell name">Тюбинг</div>
+                    <div class="table__cell open flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="10:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell close flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="22:00" class="time" max="5">
+                    </div>
+                    <div class="table__cell night flex">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                        <input type="text" name="from" id="tropa__from" placeholder="--:--" class="time" max="5">
+                    </div>
+                    <div class="table__cell state">
+                        <label>
+                            <input type="radio" name="tropa23" id="tropa__open" form="acts" class="state__radio" value="O" checked>
+                            <img src="../static/img/states_icons/O.svg" alt="" class="state__img state__open">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa23" id="tropa__paused" form="acts" class="state__radio state__paused" value="P">
+                            <img src="../static/img/states_icons/P.svg" alt="" class="state__img state__paused">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa23" id="tropa__closed" form="acts" class="state__radio state__closed" value="C">
+                            <img src="../static/img/states_icons/C.svg" alt="" class="state__img state__closed">
+                        </label>
+                        <label>
+                            <input type="radio" name="tropa23" id="tropa__out" form="acts" class="state__radio state__out" value="OO">
+                            <img src="../static/img/states_icons/OO.svg" alt="" class="state__img state__out">
+                        </label>
+                    </div>
+                    <div class="table__cell winter flex">
+                        <input type="checkbox" name="from" id="">
+                    </div>
+                    <div class="table__cell change">12.09.2020 10:36 User</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../static/js/input-time.js"></script>
+</body>
+</html>

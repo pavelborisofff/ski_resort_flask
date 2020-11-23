@@ -1,23 +1,12 @@
-@font-face {
-    font-family: Poppins-Regular;
-    src: url(../fonts/poppins/Poppins-Regular.ttf)
-}
-
-@font-face {
-    font-family: Poppins-Bold;
-    src: url(../fonts/poppins/Poppins-Bold.ttf)
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box
 }
 
-body,
-html {
-    height: 100%;
-    font-family: sans-serif
+*::after,
+*::before {
+    box-sizing: border-box;
 }
 
 a {
@@ -25,10 +14,10 @@ a {
     color: inherit;
     cursor: pointer;
     margin: 0;
-    transition: all .4s;
+    /* transition: all .4s;
     -webkit-transition: all .4s;
     -o-transition: all .4s;
-    -moz-transition: all .4s;
+    -moz-transition: all .4s; */
 }
 
 a:focus {
@@ -58,10 +47,18 @@ li {
     list-style-type: none
 }
 
+img {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    vertical-align: top;
+}
+
 input {
     display: block;
     outline: none;
-    border: none !important
+    border: none;
 }
 
 textarea {
@@ -71,7 +68,7 @@ textarea {
 
 textarea:focus,
 input:focus {
-    border-color: transparent !important
+    border-color: transparent;
 }
 
 button {
@@ -82,6 +79,30 @@ button {
 
 button:hover {
     cursor: pointer
+}
+
+
+select {
+    border: none;
+    text-align:center;
+    padding: 0;
+    width: 100%;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.select:focus {
+    outline: none;
+}
+
+label {
+    padding: 0;
+    margin: 0;
+    font-size: 0;
 }
 
 .reset-input,
@@ -126,10 +147,24 @@ button:hover {
 :root {
     --grey_fa: #fafafa;
     --grey_70: #707070;
+    --grey_dd: #dddddd;
+    --main-text: #373a3c;
     --blue: #26326b;
 }
 
 body {
     font-family: 'Fira Sans', Verdana, Geneva, Tahoma, sans-serif;
     background-color: var(--grey_fa);
+    color: var(--main-text);
+}
+
+.main__button {
+    background-color: #AC1E2A;
+    padding: 5px 10px;
+    border-radius: 2px;
+    color: white;
+}
+
+.main__button[value="Сохранить"] {
+    background-color: #8FC14F;
 }

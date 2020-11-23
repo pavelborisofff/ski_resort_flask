@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Активности</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/acts.css">
+    <link rel="stylesheet" href="../static/css/weather.css">
+    <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
+    
+    
+</head>
+<body>
+    <header class="header">
+        <div class="header__container container flex">
+            <a href="" class="header__logo logo">
+                <img src="../static/img/logo.png" alt="Rosa Khutor Logo" class="header__img">
+            </a>
+            <nav class="header__nav nav flex">
+                <ul class="nav__items flex">
+                    <li class="nav__item flex active"><a href="weather.html" class="nav__link">Погода</a></li>
+                    <li class="nav__item flex"><a href="lifts.html" class="nav__link">Подъёмники</a></li>
+                    <li class="nav__item flex"><a href="slopes.html" class="nav__link">Трассы</a></li>
+                    <li class="nav__item flex"><a href="acts.html" class="nav__link">Активности</a></li>
+                    <li class="nav__item flex"><a href="#" class="nav__link">Настройки</a></li>
+                </ul>
+            </nav>
+            <div class="header__sidenav flex">
+                <ul class="sidenav__items flex">
+                    <li class="nav__item flex"><a href="#" class="nav__link">Выход</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="main__container container flex">
+            <div class="main__menu menu">
+                <ul class="menu__items">
+                    <li class="menu__item"><a href="" class="menu__link">Роза Долина</a></li>
+                    <li class="menu__item"><a href="" class="menu__link">Роза Стадион</a></li>
+                    <li class="menu__item active"><a href="" class="menu__link">Горная олимпийская деревня</a></li>
+                    <li class="menu__item"><a href="" class="menu__link">Роза 1600</a></li>
+                    <li class="menu__item"><a href="" class="menu__link">Роза Пик</a></li>
+                    <li class="menu__item"><a href="" class="menu__link">Южный склон</a></li>
+                </ul>
+            </div>
+            <section class="main__weather weather">
+                <!-- WEATHER HEADER -->
+                <article class="weather__header dates flex">
+                    <ul class="dates__items flex">
+                        <li class="dates__item active"><a href="" class="dates__link">Погода сейчас</a></li>
+                        <li class="dates__item"><a href="" class="dates__link">Завтра</a></li>
+                        <li class="dates__item"><a href="" class="dates__link">Послезавтра</a></li>
+                        <li class="dates__item"><a href="" class="dates__link">Через 2 дня</a></li>
+                    </ul>
+                    <!-- BUTTONS -->
+                    <label class="weather__yrno">
+                        <input type="checkbox" name="yrno_checkbox" id="yrno" value="1"  onclick="yrno(this)" checked>
+                        <span>Погода с yr.no</span>
+                    </label>
+                    <!-- <div class="weather__control flex"> -->
+                    <form id="wetather" action="" method="" class="main__buttons">
+                        <button class="main__button button reset-btn" value="Отменить">Отменить</button>
+                        <button class="main__button button reset-btn" value="Сохранить">Сохранить</button>
+                    </form>
+                    <!-- </div> -->
+                </article>
+                <section class="weather__blocks flex">
+                    <!-- SNOW -->
+                    <article class="weather__block block snow flex">
+                        <h4 class="block__heading">Снег</h4>
+                        <label class="block__label flex ">
+                            <div class="item__desc">Состояние</div>
+                            <select name="kind" id="snow__kind" form="weather" class="select dsb" disabled>
+                                <option value="footpath">Отсутствие снега</option>
+                                <option value="trail" >Свежий</option>
+                                <option value="bicycle">Рыхлый</option>
+                            </select>
+                        </label>
+                        <label class="block__label flex">
+                            <div class="item__desc">Общая высота, см</div>
+                            <input type="number" name="depth" id="snow__depth" value="0" class="dsb" disabled>
+                        </label>
+                        <label class="block__label flex">
+                            <div class="item__desc">Высота свежего снега, см</div>
+                            <input type="number" name="depth-fresh" id="snow__depth-fresh" value="0" class="dsb" disabled>
+                        </label>
+                        <label class="block__label flex">
+                            <div class="item__desc">Последний снегопад</div>
+                            <input type="text" name="last" id="snow__last" value="02/04/2020" class="dsb" disabled>
+                        </label>
+                        <label class="block__label flex">
+                            <div class="item__desc">Лавиноопасность</div>
+                            <select name="kind" id="avalanche" form="weather" class="select dsb" disabled>
+                                <option value="footpath">0 - Отсутствие</option>
+                                <option value="trail">1 - Незначительно</option>
+                                <option value="bicycle">Рыхлый</option>
+                            </select>
+                        </label>
+                    </article>
+                    <!-- SKY -->
+                    <article class="weather__block block sky flex">
+                        <h4 class="block__heading">Прогноз</h4>
+                        <label class="block__label flex">
+                            <div class="item__desc">Небо до 12:00</div>
+                            <img src="../static/img/weather_icons/СОЛНЕЧНО.svg" alt="" class="weather__img">
+                            <select name="kind" id="sky__kind-am" form="weather" class="select dsb" disabled>
+                                <option value="footpath">Солнечно</option>
+                                <option value="trail">Пасмурно</option>
+                                <option value="bicycle">Буря</option>
+                            </select>
+                        </label>
+                        <label class="block__label flex">
+                            <div class="item__desc">Температура до 12:00, °С</div>
+                            <input type="number" name="temperature-am" id="temperature-am" value="0" class="temperature dsb" disabled>
+                        </label>
+                        <!-- <hr> -->
+                        <label class="block__label flex">
+                            <div class="item__desc">Небо после 12:00</div>
+                            <img src="../static/img/weather_icons/СОЛНЕЧНО.svg" alt="" class="weather__img">
+                            <select name="kind" id="sky__kind-pm" form="weather" class="select dsb" disabled>
+                                <option value="footpath">Солнечно</option>
+                                <option value="trail">Пасмурно</option>
+                                <option value="bicycle">Буря</option>
+                            </select>
+                        </label>
+                        <label class="block__label flex">
+                            <div class="item__desc">Температура после 12:00, °С</div>
+                            <input type="number" name="temperature-pm" id="temperature-pm" value="0"  class="dsb" disabled>
+                        </label>
+                        <!-- <article class="weather__block block wind"> -->
+                            <h4 class="block__heading">Ветер</h4>
+                            <label class="block__label flex">
+                                <div class="item__desc">Скорость, м/с</div>
+                                <input type="number" name="wind" id="wind" value="5" class="dsb" disabled>
+                            </label>
+                            <label class="block__label flex">
+                                <div class="item__desc">Направление</div>
+                                <select name="wind-dir" id="wind-dir" form="weather" class="select dsb" disabled>
+                                    <option value="footpath">Север</option>
+                                    <option value="footpath">Северо-восток</option>
+                                    <option value="trail">Восток</option>
+                                    <option value="trail">Юго-восток</option>
+                                    <option value="trail">Юг</option>
+                                    <option value="trail">Юго-запад</option>
+                                    <option value="trail">Запад</option>
+                                    <option value="footpath">Северо-запад</option>
+                                </select>
+                            </label>
+                        <!-- </article> -->
+                    </article>
+                    <!-- TEMPERATURE -->
+                    <!-- <article class="wetaher_block block temperature">
+                        <h4 class="block__heading">Темпреатура</h4>
+                    </article> -->
+                    <!-- WIND -->
+               
+                </section>
+            </section>
+        </div>
+    </main>
+    <script src="../static/js/input-time.js"></script>
+    <script>
+        var dsb = document.querySelectorAll(".dsb");
+
+        function yrno(f) {
+         if (f.checked) {
+            for (var i = 0; i < dsb.length; i++) {
+                    dsb[i].disabled = true
+                };
+            // document.getElementById("snow__depth").disabled = true;
+        }  else {
+            for (var i = 0; i < dsb.length; i++) {
+                    dsb[i].disabled = false
+                };
+        //  document.getElementById("snow__depth").disabled = false; 
+            }
+        }
+    </script>
+</body>
+</html>
