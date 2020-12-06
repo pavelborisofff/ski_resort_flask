@@ -62,7 +62,7 @@ function closeAllSelect(elmnt) {
   xl = x.length;
   yl = y.length;
   for (i = 0; i < yl; i++) {
-    if (elmnt == y[i]) {
+    if (elmnt === y[i]) {
       arrNo.push(i)
     } else {
       y[i].classList.remove("select-arrow-active");

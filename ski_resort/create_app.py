@@ -21,18 +21,18 @@ def create_app(config_class=Config):
     def create_tables():
         db.create_all()
 
-    api.add_resource(item.Act, '/acts/<string:name>')
-    api.add_resource(item.Acts, '/acts')
-    api.add_resource(item.Slope, '/slopes/<string:name>')
-    api.add_resource(item.Slopes, '/slopes')
-    api.add_resource(item.Lift, '/lifts/<string:name>')
-    api.add_resource(item.Lifts, '/lifts')
-    api.add_resource(user.User, '/users/<string:name>')
-    api.add_resource(user.Users, '/users')
+    api.add_resource(item.Act, '/api/acts/<string:name>')
+    api.add_resource(item.Acts, '/api/acts')
+    api.add_resource(item.Slope, '/api/slopes/<string:name>')
+    api.add_resource(item.Slopes, '/api/slopes')
+    api.add_resource(item.Lift, '/api/lifts/<string:name>')
+    api.add_resource(item.Lifts, '/api//lifts')
+    api.add_resource(user.User, '/api/users/<string:name>')
+    api.add_resource(user.Users, '/api/users')
 
-    api.add_resource(weather.Weather, '/weather/<string:kind>/<string:name>/<int:day>')
-    api.add_resource(weather.WeatherDay, '/weather/<string:kind>/<int:day>')
+    api.add_resource(weather.Weather, '/api/weather/<string:kind>/<string:name>/<int:day>')
+    api.add_resource(weather.WeatherDay, '/api/weather/<string:kind>/<int:day>')
 
-    api.add_resource(season.Summer, '/season')
+    api.add_resource(season.Summer, '/api/season')
 
     return app

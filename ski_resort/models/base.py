@@ -5,6 +5,7 @@ from db import db
 
 class BaseModel(db.Model):
     __abstract__ = True
+    __table_args__ = {'extend_existing': True}
 
     def save_to_db(self):
         db.session.add(self)
