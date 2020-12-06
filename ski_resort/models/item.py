@@ -58,6 +58,9 @@ class ActModel(ItemModel):
 
     icon = db.Column(db.String(80))
 
+    def __repr__(self):
+        return f'Act {self.name}'
+
 
 class SlopeModel(ItemModel):
     __tablename__ = 'slopes'
@@ -66,6 +69,9 @@ class SlopeModel(ItemModel):
     length = db.Column(db.Integer)
     height = db.Column(db.Integer)
     night = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return f'Slope {self.name}'
 
 
 class LiftModel(ItemModel):
@@ -90,3 +96,6 @@ class LiftModel(ItemModel):
     last_up3 = db.Column(db.String(50), default=None)
     last_up3_open_from = db.Column(db.String(5), default=None)
     last_up3_open_till = db.Column(db.String(5), default=None)
+
+    def __repr__(self):
+        return f'Lift {self.name}'

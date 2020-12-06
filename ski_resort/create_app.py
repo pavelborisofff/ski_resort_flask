@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_login import LoginManager
 from flask_restful import Api
 
 from config import Config
@@ -16,6 +17,11 @@ def create_app(config_class=Config):
 
     db.init_app(app)
     ma.init_app(app)
+
+    # login = LoginManager(app)
+    # login_manager = LoginManager()
+    # login_manager.login_view = 'login'
+    # login_manager.init_app(app)
 
     @app.before_first_request
     def create_tables():
