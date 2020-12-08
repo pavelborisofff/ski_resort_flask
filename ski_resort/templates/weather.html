@@ -19,11 +19,6 @@
                     {% for zone in zones %}
                     <li class="menu__item {{ 'active' if name == zone }}"><a href="{{ url_for('page_weather', kind='local', name=zone, day=0)}}" class="menu__link">{{ zone }}</a></li>
                     {% endfor %}
-<!--                    <li class="menu__item {{ 'active' if name == 'Роза Стадион' }}"><a href="" class="menu__link">Роза Стадион</a></li>-->
-<!--                    <li class="menu__item {{ 'active' if name == 'Горная олимпийская деревня' }}"><a href="" class="menu__link">Горная олимпийская деревня</a></li>-->
-<!--                    <li class="menu__item {{ 'active' if name == 'Роза 1600' }}"><a href="" class="menu__link">Роза 1600</a></li>-->
-<!--                    <li class="menu__item {{ 'active' if name == 'Роза Пик' }}"><a href="" class="menu__link">Роза Пик</a></li>-->
-<!--                    <li class="menu__item {{ 'active' if name == 'Южный склон' }}"><a href="" class="menu__link">Южный склон</a></li>-->
                 </ul>
             </div>
             <section class="main__weather weather">

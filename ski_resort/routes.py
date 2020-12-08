@@ -3,10 +3,10 @@ import requests
 from flask import request, flash, redirect, url_for, render_template, session, send_from_directory, jsonify
 from flask_login import current_user, login_user, logout_user, login_required, LoginManager
 
-from forms import LoginForm
-from models.user import UserModel
-from resources.item import Item, Items, Slope, Slopes
-from resources.weather import Weather
+from .my_forms import LoginForm
+from .models.user import UserModel
+from .resources.item import Item, Items, Slope, Slopes
+from .resources.weather import Weather
 
 
 def post_items(_request: request, obj: Item, name: str) -> None:
@@ -83,7 +83,7 @@ def main(app):
             flash('Invalid username or password')
             return redirect(url_for('login'))
 
-        return render_template('login.html', title='Сигн ин', form=_form)
+        return render_template('login.html', title='Вход', form=_form)
 
     @app.route('/lifts', methods=['GET', 'POST'])
     def page_lifts():
