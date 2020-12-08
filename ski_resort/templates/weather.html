@@ -1,169 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Активности</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com"> 
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/normalize.css">
-    <link rel="stylesheet" href="../static/css/main.css">
-    <link rel="stylesheet" href="../static/css/acts.css">
-    <link rel="stylesheet" href="../static/css/weather.css">
-    <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
-    
-    
-</head>
-<body>
-    <header class="header">
-        <div class="header__container container flex">
-            <a href="" class="header__logo logo">
-                <img src="../static/img/logo.png" alt="Rosa Khutor Logo" class="header__img">
-            </a>
-            <nav class="header__nav nav flex">
-                <ul class="nav__items flex">
-                    <li class="nav__item flex active"><a href="weather.html" class="nav__link">Погода</a></li>
-                    <li class="nav__item flex"><a href="lifts.html" class="nav__link">Подъёмники</a></li>
-                    <li class="nav__item flex"><a href="slopes.html" class="nav__link">Трассы</a></li>
-                    <li class="nav__item flex"><a href="acts.html" class="nav__link">Активности</a></li>
-                    <li class="nav__item flex"><a href="#" class="nav__link">Настройки</a></li>
-                </ul>
-            </nav>
-            <div class="header__sidenav flex">
-                <ul class="sidenav__items flex">
-                    <li class="nav__item flex"><a href="#" class="nav__link">Выход</a></li>
-                </ul>
-            </div>
-        </div>
-    </header>
+{% extends 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/weather.css') }}">
+{% endblock %}
+
+{% block title %} Погода — {{ name }} {% endblock %}
+
+{% block content %}
+    {% set active_page = 'weather' %}
+    {% include 'header.html' %}
     <main class="main">
         <div class="main__container container flex">
+            <h1 class="visually-hidden">Погода — {{ name }}</h1>
+            <!--  LEFT MENU  -->
             <div class="main__menu menu">
+                {% set zones = ['Роза Долина', 'Роза Стадион', 'Горная олимпийская деревня', 'Роза 1600', 'Роза Пик', 'Южный склон'] %}
                 <ul class="menu__items">
-                    <li class="menu__item"><a href="" class="menu__link">Роза Долина</a></li>
-                    <li class="menu__item"><a href="" class="menu__link">Роза Стадион</a></li>
-                    <li class="menu__item active"><a href="" class="menu__link">Горная олимпийская деревня</a></li>
-                    <li class="menu__item"><a href="" class="menu__link">Роза 1600</a></li>
-                    <li class="menu__item"><a href="" class="menu__link">Роза Пик</a></li>
-                    <li class="menu__item"><a href="" class="menu__link">Южный склон</a></li>
+                    {% for zone in zones %}
+                    <li class="menu__item {{ 'active' if name == zone }}"><a href="{{ url_for('page_weather', kind='local', name=zone, day=0)}}" class="menu__link">{{ zone }}</a></li>
+                    {% endfor %}
+<!--                    <li class="menu__item {{ 'active' if name == 'Роза Стадион' }}"><a href="" class="menu__link">Роза Стадион</a></li>-->
+<!--                    <li class="menu__item {{ 'active' if name == 'Горная олимпийская деревня' }}"><a href="" class="menu__link">Горная олимпийская деревня</a></li>-->
+<!--                    <li class="menu__item {{ 'active' if name == 'Роза 1600' }}"><a href="" class="menu__link">Роза 1600</a></li>-->
+<!--                    <li class="menu__item {{ 'active' if name == 'Роза Пик' }}"><a href="" class="menu__link">Роза Пик</a></li>-->
+<!--                    <li class="menu__item {{ 'active' if name == 'Южный склон' }}"><a href="" class="menu__link">Южный склон</a></li>-->
                 </ul>
             </div>
             <section class="main__weather weather">
-                <!-- WEATHER HEADER -->
-                <article class="weather__header dates flex">
+                <div class="weather__header dates flex">
+                    <!-- SLOPES HEADING -->
                     <ul class="dates__items flex">
                         <li class="dates__item active"><a href="" class="dates__link">Погода сейчас</a></li>
                         <li class="dates__item"><a href="" class="dates__link">Завтра</a></li>
                         <li class="dates__item"><a href="" class="dates__link">Послезавтра</a></li>
                         <li class="dates__item"><a href="" class="dates__link">Через 2 дня</a></li>
                     </ul>
-                    <!-- BUTTONS -->
+                    <!-- YRNO -->
                     <label class="weather__yrno">
                         <input type="checkbox" name="yrno_checkbox" id="yrno" value="1"  onclick="yrno(this)" checked>
                         <span>Погода с yr.no</span>
                     </label>
-                    <!-- <div class="weather__control flex"> -->
-                    <form id="wetather" action="" method="" class="main__buttons">
-                        <button class="main__button button reset-btn" value="Отменить">Отменить</button>
-                        <button class="main__button button reset-btn" value="Сохранить">Сохранить</button>
+                    <!-- BUTTONS -->
+                    <form id="weather" action="" method="POST" class="main__buttons">
+                        <button class="main__button button reset-btn" type="reset" value="Отменить">Отменить</button>
+                        <button class="main__button button reset-btn" type="submit" value="Сохранить">Сохранить</button>
                     </form>
-                    <!-- </div> -->
-                </article>
+                </div>
                 <section class="weather__blocks flex">
                     <!-- SNOW -->
                     <article class="weather__block block snow flex">
+                        <!-- SNOW -->
                         <h4 class="block__heading">Снег</h4>
+                        <!-- SNOW STATE -->
                         <label class="block__label flex ">
                             <div class="item__desc">Состояние</div>
-                            <select name="kind" id="snow__kind" form="weather" class="select dsb" disabled>
-                                <option value="footpath">Отсутствие снега</option>
-                                <option value="trail" >Свежий</option>
-                                <option value="bicycle">Рыхлый</option>
+                            {% set current_snow_state = weather.get('snow_state', '-') %}
+                            {% set snow_states = ['ОТСУТСТВИЕ СНЕГА', 'СВЕЖИЙ', 'РЫХЛЫЙ', 'ВЕСЕННИЙ', '-'] %}
+                            <select name="snow_state" id="snow_state" form="weather" class="select dsb" disabled>
+                                {% for snow_state in snow_states %}
+                                <option value="{{ snow_state.upper() }}" {% if current_snow_state.upper() == snow_state %}selected{% endif %}>{{ snow_state.upper() }}</option>
+                                {% endfor %}
                             </select>
                         </label>
+                        <!-- SNOW HEIGHT -->
                         <label class="block__label flex">
                             <div class="item__desc">Общая высота, см</div>
-                            <input type="number" name="depth" id="snow__depth" value="0" class="dsb" disabled>
+                            <input type="number" name="snow_height" id="snow_height" form="weather"  value="{{ weather.get('snow_height') }}" class="dsb" disabled>
                         </label>
+                        <!-- SNOW HEIGHT NEW-->
                         <label class="block__label flex">
                             <div class="item__desc">Высота свежего снега, см</div>
-                            <input type="number" name="depth-fresh" id="snow__depth-fresh" value="0" class="dsb" disabled>
+                            <input type="number" name="snow_height_new" id="snow_height_new" form="weather"  value="{{ weather.get('snow_height_new') }}" class="dsb" disabled>
                         </label>
+                        <!-- SNOW DATE-->
                         <label class="block__label flex">
                             <div class="item__desc">Последний снегопад</div>
-                            <input type="text" name="last" id="snow__last" value="02/04/2020" class="dsb" disabled>
+                            <input type="text" name="snow_date" id="snow_date" form="weather"  value="{{ weather.get('snow_date', '-') }}" class="dsb" disabled>
                         </label>
+                        <!-- SNOW AVALANCHE-->
                         <label class="block__label flex">
                             <div class="item__desc">Лавиноопасность</div>
-                            <select name="kind" id="avalanche" form="weather" class="select dsb" disabled>
-                                <option value="footpath">0 - Отсутствие</option>
-                                <option value="trail">1 - Незначительно</option>
-                                <option value="bicycle">Рыхлый</option>
+                            {% set current_avalanche_state = weather.get('snow_avalanche', 0) %}
+                            {% set avalanche = {1: 'Безопасно', 2: 'Незначительно', 3: 'Средне', 4: 'Опасно', 5: 'Очень опасно', 0: 'Неизвестно' } %}
+                            <select name="snow_avalanche" id="snow_avalanche" form="weather" class="select dsb" disabled>
+                                {% for key, value in avalanche.items()  %}
+                                <option value="{{ key }}" {% if current_avalanche_state == key %}selected{% endif %}>{{ key }} - {{ value }}</option>
+                                {% endfor %}
                             </select>
                         </label>
                     </article>
-                    <!-- SKY -->
+                    <!-- SKY TEMP  -->
                     <article class="weather__block block sky flex">
                         <h4 class="block__heading">Прогноз</h4>
+                        <!-- SKY TEMP before 12 -->
+                        {% set weather_states = ['НЕТ', 'ДОЖДЬ', 'ОБЛАЧНО', 'ПАСМУРНО', 'СНЕГ', 'СОЛНЕЧНО', 'СОЛНЦЕ', 'БУРЯ'] %}
+                        <!-- SKY before 12  -->
                         <label class="block__label flex">
                             <div class="item__desc">Небо до 12:00</div>
-                            <img src="../static/img/weather_icons/СОЛНЕЧНО.svg" alt="" class="weather__img">
-                            <select name="kind" id="sky__kind-am" form="weather" class="select dsb" disabled>
-                                <option value="footpath">Солнечно</option>
-                                <option value="trail">Пасмурно</option>
-                                <option value="bicycle">Буря</option>
+                            {% set sky = weather.get('weather_sky_day', 'НЕТ') %}
+                            <img src="{{ url_for('static', filename='img/weather_icons/' + weather.get('weather_sky') + '.svg') }} " alt="" class="weather__img">
+                            <select name="weather_sky" id="weather_sky" form="weather" class="select dsb" disabled>
+                                {% set weather_states = ['НЕТ', 'ДОЖДЬ', 'ОБЛАЧНО', 'ПАСМУРНР', 'СНЕГ', 'СОЛНЕЧНО', 'СОЛНЦЕ', 'БУРЯ'] %}
+                                {% for weather_state in weather_states %}
+                                <option value="{{ weather_state }}" {% if sky == weather_state %}selected{% endif %}>{{ weather_state }}</option>
+                                {% endfor %}
                             </select>
                         </label>
+                        <!-- TEMP before 12  -->
                         <label class="block__label flex">
                             <div class="item__desc">Температура до 12:00, °С</div>
-                            <input type="number" name="temperature-am" id="temperature-am" value="0" class="temperature dsb" disabled>
+                            <input type="number" name="weather_temp" id="weather_temp" form="weather"  value="{{ weather.get('weather_temp') }}" class="temperature dsb" disabled>
                         </label>
-                        <!-- <hr> -->
+                        <!-- SKY TEMP after 12 -->
+                        <!-- SKY after 12  -->
                         <label class="block__label flex">
-                            <div class="item__desc">Небо после 12:00</div>
-                            <img src="../static/img/weather_icons/СОЛНЕЧНО.svg" alt="" class="weather__img">
-                            <select name="kind" id="sky__kind-pm" form="weather" class="select dsb" disabled>
-                                <option value="footpath">Солнечно</option>
-                                <option value="trail">Пасмурно</option>
-                                <option value="bicycle">Буря</option>
+                            <div class="item__desc">Небо до 12:00</div>
+                            {% set sky_day = weather.get('weather_sky_day', 'НЕТ') %}
+                            <img src="{{ url_for('static', filename='img/weather_icons/' + sky + '.svg') }} " alt="" class="weather__img">
+                            <select name="weather_sky_day" id="weather_sky_day" form="weather" class="select dsb" disabled>
+                                {% for weather_state in weather_states %}
+                                <option value="{{ weather_state }}" {% if sky_day == weather_state %}selected{% endif %}>{{ weather_state }}</option>
+                                {% endfor %}
                             </select>
                         </label>
+                        <!-- TEMP after 12  -->
                         <label class="block__label flex">
-                            <div class="item__desc">Температура после 12:00, °С</div>
-                            <input type="number" name="temperature-pm" id="temperature-pm" value="0"  class="dsb" disabled>
+                            <div class="item__desc">Температура до 12:00, °С</div>
+                            <input type="number" name="weather_temp_day" form="weather"  id="weather_temp_day" value="{{ weather.get('weather_temp_day') }}" class="temperature dsb" disabled>
                         </label>
-                        <!-- <article class="weather__block block wind"> -->
-                            <h4 class="block__heading">Ветер</h4>
+                        <!-- WIND  -->
+                        <h4 class="block__heading">Ветер</h4>
                             <label class="block__label flex">
                                 <div class="item__desc">Скорость, м/с</div>
-                                <input type="number" name="wind" id="wind" value="5" class="dsb" disabled>
+                                <input type="number" name="wind_velocity" id="wind_velocity" form="weather"  value="{{ weather.get('wind_velocity') }}" class="dsb" disabled>
                             </label>
                             <label class="block__label flex">
                                 <div class="item__desc">Направление</div>
-                                <select name="wind-dir" id="wind-dir" form="weather" class="select dsb" disabled>
-                                    <option value="footpath">Север</option>
-                                    <option value="footpath">Северо-восток</option>
-                                    <option value="trail">Восток</option>
-                                    <option value="trail">Юго-восток</option>
-                                    <option value="trail">Юг</option>
-                                    <option value="trail">Юго-запад</option>
-                                    <option value="trail">Запад</option>
-                                    <option value="footpath">Северо-запад</option>
+                                {% set direction = weather.get('wind_direction') %}
+                                {% set directions = {'N': 'С', 'NE': 'СВ', 'E': 'В', 'SE': 'ЮВ', 'S': 'Ю', 'SW': 'ЮЗ', 'W': 'З', 'NW': 'СЗ', None: '-'} %}
+                                <select name="wind_direction" id="wind_direction" form="weather" class="select dsb" disabled>
+                                    {% for key, value in directions.items() %}
+                                    <option value="{{ key }}" {% if direction == key %}selected{% endif %}>{{ value }}</option>
+                                    {% endfor %}
                                 </select>
                             </label>
-                        <!-- </article> -->
                     </article>
-                    <!-- TEMPERATURE -->
-                    <!-- <article class="wetaher_block block temperature">
-                        <h4 class="block__heading">Темпреатура</h4>
-                    </article> -->
-                    <!-- WIND -->
-               
                 </section>
             </section>
         </div>
     </main>
-    <script src="../static/js/input-time.js"></script>
     <script>
         var dsb = document.querySelectorAll(".dsb");
 
@@ -177,9 +162,8 @@
             for (var i = 0; i < dsb.length; i++) {
                     dsb[i].disabled = false
                 };
-        //  document.getElementById("snow__depth").disabled = false; 
+        //  document.getElementById("snow__depth").disabled = false;
             }
         }
     </script>
-</body>
-</html>
+{% endblock %}

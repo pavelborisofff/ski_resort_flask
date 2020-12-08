@@ -11,8 +11,10 @@
     {% include 'header.html' %}
     <main class="main">
         <div class="main__container container">
+            <!-- SLOPES HEADING -->
             <div class="main__header flex">
                 <h1 class="main__heading">Трассы</h1>
+                <!-- BUTTONS -->
                 <form id="slopes" action="" method="POST" class="main__buttons">
                     <button class="main__button button reset-btn" type="reset" value="Отменить">Отменить</button>
                     <button class="main__button button reset-btn" type="submit" value="Сохранить">Сохранить</button>
@@ -87,7 +89,7 @@
                         {% endfor %}
                     </div>
                     <!-- UPDATED  -->
-                    <div class="table__cell change">{{ slope.get('updated')|truncate(19, True, end='')}} {{ slope.get('updated_by') }}</div>
+                    <div class="table__cell change">{{ slope.get('updated')|truncate(16, True, end='')|replace('-', '.')}} {{ slope.get('updated_by') }}</div>
                 </div>
 
                 {% endfor %}

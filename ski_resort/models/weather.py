@@ -5,6 +5,8 @@ from item import ResortItemModel
 class WeatherModel(ResortItemModel):
     __abstract__ = True
 
+    height = db.Column(db.Integer)
+
     # Weather
     weather_sky = db.Column(db.String(80), default='-')
     weather_temp = db.Column(db.Integer, default=0)
@@ -18,6 +20,8 @@ class WeatherModel(ResortItemModel):
 
 class WeatherZeroModel(ResortItemModel):
     __abstract__ = True
+
+    height = db.Column(db.Integer)
 
     # Weather
     weather_sky = db.Column(db.String(80), default='-')
@@ -34,7 +38,7 @@ class WeatherZeroModel(ResortItemModel):
     snow_height = db.Column(db.Integer, default=0)
     snow_height_new = db.Column(db.Integer, default=0)
     snow_date = db.Column(db.String(20), default='-')
-    snow_avalanche = db.Column(db.String(20), default='-')
+    snow_avalanche = db.Column(db.Integer, default=0)
 
 
 class WeatherZeroLocalModel(WeatherZeroModel):

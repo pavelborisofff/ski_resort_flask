@@ -56,6 +56,33 @@ class Weather(Resource):
         cls.model = cls.obj_choice[kind]['models_list'][day]
 
     @classmethod
+    def update(cls, kind: str, name: str, day: int, data: dict) -> (dict, int):
+        result = cls.check_params(kind, day)
+
+        if result:
+            return result
+
+        data['name'] = name
+
+        schema = cls.obj_choice[kind]['schema_list'][day]()
+        weather_loads = schema.load(data)
+
+        weather = cls.model.find_by_name(name=name)
+
+        if weather:
+            try:
+                weather.update(data)
+
+                return {'item': {k: v for k, v in schema.dump(weather_loads).items() if v},
+                        'message': SUCCESSFULLY_UPDATED.format(obj=cls.__name__, name=name, day=day)}, 201
+            except Exception as e:
+                return {'item': {k: v for k, v in schema.dump(weather_loads).items() if v},
+                        'message': ERROR_DATABASE.format(err=e),
+                        'error': e}, 500
+
+        return {'message': NOT_FOUND.format(obj=cls.__name__, name=name)}, 404
+
+    @classmethod
     def get(cls, kind: str, name: str, day: int) -> (dict, int):
         result = cls.check_params(kind, day)
 

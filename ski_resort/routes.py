@@ -6,32 +6,32 @@ from flask_login import current_user, login_user, logout_user, login_required, L
 from forms import LoginForm
 from models.user import UserModel
 from resources.item import Item, Items, Slope, Slopes
+from resources.weather import Weather
 
 
-def post_items(_request: request, obj: Item, objs: Items, key: str, name: str) -> list:
-    if _request.method == 'POST':
+def post_items(_request: request, obj: Item, name: str) -> None:
+    for field, value in _request.form.items():
+        _id, key = field.split('__')
 
-        for field, value in request.form.items():
-            _id, key = field.split('__')
+        if obj.get_by_id(int(_id)).get('name'):
+            item = obj.get_by_id(int(_id))
+            if value and value != item[key]:
+                data = {key: value, 'updated_by': name}
+                response = obj.update(_id, data)
+                print(response)
 
-            if obj.get_by_id(int(_id)).get('name'):
-                item = obj.get_by_id(int(_id))
-                if value and value != item[key]:
-                    data = {key: value, 'updated_by': name}
-                    response = obj.update(_id, data)
-                    print(response)
 
-    get_items = objs.get()
+def get_items(objs: Items, key: str):
+    _get_items = objs.get()
 
     _list_items = []
-    if get_items and get_items[0].get(key):
-        _list_items = get_items[0].get(key)
+    if _get_items and _get_items[0].get(key):
+        _list_items = _get_items[0].get(key)
 
     return _list_items
 
 
 def main(app):
-
     login_manager = LoginManager()
     login_manager.login_view = 'login'
     login_manager.init_app(app)
@@ -46,10 +46,26 @@ def main(app):
 
     @app.route('/')
     @app.route('/index')
-    @app.route('/weather')
     # @login_required
     def index():
-        return render_template('index.html')
+        return redirect(url_for('page_weather', kind='local', name='Роза Долина', day=0))
+
+    @app.route('/<string:kind>/<string:name>/<int:day>',  methods=['POST', 'GET'])
+    # @login_required
+    def page_weather(kind, name, day):
+        weather_local = Weather.get(kind, name, day)[0]
+
+        if request.method == 'POST':
+
+            for field, value in request.form.items():
+                value = value if (set(value) - set('1234567890')) else int(value)
+                if value != weather_local.get(field):
+                    data = {field: value, 'updated_by': current_user.name}
+                    response = Weather.update(kind, name, day, data=data)
+                    print(response)
+            return redirect(url_for('page_weather', kind=kind, name=name, day=day))
+
+        return render_template('weather.html', name=name, weather=weather_local)
 
     @app.route('/login', methods=['POST', 'GET'])
     def login():
@@ -66,18 +82,8 @@ def main(app):
 
             flash('Invalid username or password')
             return redirect(url_for('login'))
+
         return render_template('login.html', title='Сигн ин', form=_form)
-
-        # flash('Login requested for user {}, remember_me={}'.format(
-        #     form.username.data, form.remember_me.data))
-
-        # if request.method == 'POST':
-        #     user = request.form['nm']
-        #     session['user'] = user
-        #     return render_template(url_for('user', usr=user))
-        # return render_template('login.html')
-
-        # return request.get('http://localhost:5001/acts').json()
 
     @app.route('/lifts', methods=['GET', 'POST'])
     def page_lifts():
@@ -85,8 +91,11 @@ def main(app):
 
     @app.route('/slopes', methods=['GET', 'POST'])
     def page_slopes():
+        if request.method == 'POST':
+            post_items(request, Slope, current_user.name or 'anon')
+            return redirect(url_for('page_slopes'))
 
-        list_items = post_items(request, Slope, Slopes, 'slopes', current_user.name)
+        list_items = get_items(Slopes, 'slopes')
 
         return render_template('slopes.html', list_slopes=list_items)
 
@@ -98,3 +107,16 @@ def main(app):
     def logout():
         logout_user()
         return redirect(url_for('login'))
+
+
+
+# flash('Login requested for user {}, remember_me={}'.format(
+#     form.username.data, form.remember_me.data))
+
+# if request.method == 'POST':
+#     user = request.form['nm']
+#     session['user'] = user
+#     return render_template(url_for('user', usr=user))
+# return render_template('login.html')
+
+# return request.get('http://localhost:5001/acts').json()

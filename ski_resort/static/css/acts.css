@@ -176,7 +176,8 @@
     width: 50px;
     text-align: center;
     padding: 4px;
-    color: var(--main-text);
+    color: #8FC14F;
+    /*color: var(--main-text);*/
 }
 
 .time::placeholder {
