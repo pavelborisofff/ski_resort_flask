@@ -1,5 +1,5 @@
-from db import db
-from models.base import BaseModel
+from ski_resort.db import db
+from ski_resort.models.base import BaseModel
 
 
 class SummerModel(BaseModel):

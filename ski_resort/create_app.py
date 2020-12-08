@@ -1,12 +1,11 @@
 from flask import Flask
-from flask_login import LoginManager
 from flask_restful import Api
 
-from config import Config
-from db import db
-from ma import ma
+from .config import Config
+from .db import db
+from .ma import ma
 
-from resources import item, season, user, weather
+from .resources import item, season, user, weather
 
 
 def create_app(config_class=Config):
@@ -17,12 +16,7 @@ def create_app(config_class=Config):
 
     db.init_app(app)
     ma.init_app(app)
-
-    # login = LoginManager(app)
-    # login_manager = LoginManager()
-    # login_manager.login_view = 'login'
-    # login_manager.init_app(app)
-
+    
     @app.before_first_request
     def create_tables():
         db.create_all()

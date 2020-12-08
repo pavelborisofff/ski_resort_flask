@@ -1,4 +1,4 @@
-from db import db
+from ski_resort.db import db
 # from resort_item import ResortItemModel
 
 

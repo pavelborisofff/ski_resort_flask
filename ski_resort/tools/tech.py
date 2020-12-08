@@ -5,6 +5,7 @@ import logging.config
 def init_logger(name: str, logfile: str = 'logger.ini') -> logging:
     """
     Initialize logger as root
+    :param logfile:
     :param name:
     :return:
     """

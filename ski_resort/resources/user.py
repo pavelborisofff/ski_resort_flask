@@ -1,6 +1,6 @@
-from models.user import UserModel
-from resources.item import Item, Items
-from schemas.user import UserSchema
+from ski_resort.models.user import UserModel
+from ski_resort.resources.item import Item, Items
+from ski_resort.schemas.user import UserSchema
 
 
 class User(Item):

@@ -1,6 +1,6 @@
-from ma import ma
+from ski_resort.ma import ma
 
-from models.weather import *
+from ski_resort.models.weather import *
 
 
 class WeatherSchema(ma.SQLAlchemyAutoSchema):

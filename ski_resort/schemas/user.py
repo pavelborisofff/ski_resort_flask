@@ -1,6 +1,6 @@
-from ma import ma
+from ski_resort.ma import ma
 
-from models.user import UserModel
+from ski_resort.models.user import UserModel
 
 
 class UserSchema(ma.SQLAlchemyAutoSchema):

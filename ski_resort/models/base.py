@@ -1,6 +1,6 @@
 from typing import List
 
-from db import db
+from ski_resort.db import db
 
 
 class BaseModel(db.Model):

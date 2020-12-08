@@ -1,8 +1,8 @@
 import enum
 import datetime
 
-from db import db
-from base import BaseModel
+from ski_resort.db import db
+from .base import BaseModel
 
 
 class StatusEnum(enum.Enum):

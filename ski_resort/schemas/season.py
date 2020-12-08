@@ -1,6 +1,6 @@
-from ma import ma
+from ski_resort.ma import ma
 
-from models.season import SummerModel
+from ski_resort.models.season import SummerModel
 
 
 class SummerSchema(ma.SQLAlchemyAutoSchema):

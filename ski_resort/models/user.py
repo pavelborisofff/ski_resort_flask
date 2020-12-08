@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 
-from db import db
-from item import ResortItemModel
+from ski_resort.db import db
+from .item import ResortItemModel
 
 
 class UserModel(UserMixin, ResortItemModel):

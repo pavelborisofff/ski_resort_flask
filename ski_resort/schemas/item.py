@@ -1,6 +1,6 @@
-from ma import ma
+from ski_resort.ma import ma
 
-from models.item import ActModel, SlopeModel, LiftModel
+from ski_resort.models.item import ActModel, SlopeModel, LiftModel
 
 
 class ItemSchema(ma.SQLAlchemyAutoSchema):

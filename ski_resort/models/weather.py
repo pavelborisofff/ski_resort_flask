@@ -1,5 +1,5 @@
-from db import db
-from item import ResortItemModel
+from ski_resort.db import db
+from ski_resort.models.item import ResortItemModel
 
 
 class WeatherModel(ResortItemModel):

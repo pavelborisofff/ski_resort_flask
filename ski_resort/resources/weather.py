@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
 
-from schemas.weather import *
+from ski_resort.schemas.weather import *
 
 
 SUCCESSFULLY_UPDATED = '{obj} \'{name}\' \'{day}\' successfully updated'

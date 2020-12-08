@@ -1,8 +1,8 @@
 from flask import request
 from flask_restful import Resource
 
-from schemas.item import *
-from models.item import *
+from ski_resort.schemas.item import *
+from ski_resort.models.item import *
 
 
 SUCCESSFULLY_UPDATED = '{obj} \'{name}\' successfully updated'

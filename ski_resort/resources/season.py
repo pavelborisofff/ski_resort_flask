@@ -2,8 +2,8 @@ from datetime import datetime
 from flask import request
 from flask_restful import Resource
 
-from models.season import SummerModel
-from schemas.season import SummerSchema
+from ski_resort.models.season import SummerModel
+from ski_resort.schemas.season import SummerSchema
 
 
 NOT_FOUND = '{obj} check endpoint'
