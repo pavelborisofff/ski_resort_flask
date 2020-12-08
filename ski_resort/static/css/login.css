@@ -1,0 +1,50 @@
+h1 {
+    color: var(--main-text);
+    font-size: 24px;
+    text-align: center;
+    margin: 20px auto 20px;
+}
+
+.login {
+    margin: 100px auto;
+    width: 400px;
+    padding: 20px;
+    /*text-align: center;*/
+}
+
+form, input {
+    width: 100%;
+}
+
+input,
+input:focus {
+    height: 30px;
+    border: 1px solid var(--grey_dd);
+    padding-left: 10px;
+}
+
+label {
+    color: var(--main-text);
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.remember {
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+#remember_me {
+    width: auto;
+    height: 16px;
+}
+
+#submit {
+    background-color: #8FC14F;
+    width: auto;
+    padding: 10px 20px 30px;
+    margin: 0 auto;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
