@@ -1,10 +1,33 @@
 import requests
 
-from flask import request, flash, redirect, url_for, render_template, session, send_from_directory
+from flask import request, flash, redirect, url_for, render_template, session, send_from_directory, jsonify
 from flask_login import current_user, login_user, logout_user, login_required, LoginManager
 
 from forms import LoginForm
 from models.user import UserModel
+from resources.item import Item, Items, Slope, Slopes
+
+
+def post_items(_request: request, obj: Item, objs: Items, key: str, name: str) -> list:
+    if _request.method == 'POST':
+
+        for field, value in request.form.items():
+            _id, key = field.split('__')
+
+            if obj.get_by_id(int(_id)).get('name'):
+                item = obj.get_by_id(int(_id))
+                if value and value != item[key]:
+                    data = {key: value, 'updated_by': name}
+                    response = obj.update(_id, data)
+                    print(response)
+
+    get_items = objs.get()
+
+    _list_items = []
+    if get_items and get_items[0].get(key):
+        _list_items = get_items[0].get(key)
+
+    return _list_items
 
 
 def main(app):
@@ -23,7 +46,8 @@ def main(app):
 
     @app.route('/')
     @app.route('/index')
-    @login_required
+    @app.route('/weather')
+    # @login_required
     def index():
         return render_template('index.html')
 
@@ -55,9 +79,20 @@ def main(app):
 
         # return request.get('http://localhost:5001/acts').json()
 
-    @app.route('/sl')
-    def admin():
-        return request.get('http://localhost:5001/slopes').json()
+    @app.route('/lifts', methods=['GET', 'POST'])
+    def page_lifts():
+        return render_template('lifts.html')
+
+    @app.route('/slopes', methods=['GET', 'POST'])
+    def page_slopes():
+
+        list_items = post_items(request, Slope, Slopes, 'slopes', current_user.name)
+
+        return render_template('slopes.html', list_slopes=list_items)
+
+    @app.route('/acts', methods=['GET', 'POST'])
+    def page_acts():
+        return render_template('acts.html')
 
     @app.route('/logout')
     def logout():

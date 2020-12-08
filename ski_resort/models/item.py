@@ -33,7 +33,9 @@ class ResortItemModel(BaseModel):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
+    name_en = db.Column(db.String(80), unique=True)
     updated = db.Column(db.String(40))
+    updated_by = db.Column(db.String(40), default='root')
     inactive = db.Column(db.Boolean, default=False)
 
     def save_to_db(self):
@@ -45,7 +47,8 @@ class ResortItemModel(BaseModel):
 class ItemModel(ResortItemModel):
     __abstract__ = True
 
-    status = db.Column(db.String(2), default='OO')
+    state = db.Column(db.String(2), default='OO')
+    type = db.Column(db.String(2), default='-')
     open_from = db.Column(db.String(5), default='-')
     open_till = db.Column(db.String(5), default='-')
     # status = db.Column(db.Enum(StatusEnum), default=StatusEnum.out_of_order)
@@ -65,10 +68,11 @@ class ActModel(ItemModel):
 class SlopeModel(ItemModel):
     __tablename__ = 'slopes'
 
-    difficult = db.Column(db.String(10), default='green')
+    level = db.Column(db.String(10), default='green')
     length = db.Column(db.Integer)
     height = db.Column(db.Integer)
     night = db.Column(db.Boolean, default=False)
+    south = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f'Slope {self.name}'

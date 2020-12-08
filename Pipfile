@@ -19,6 +19,7 @@ pymysql = "*"
 requests = "*"
 flask-wtf = "*"
 flask-login = "*"
+cryptography = "*"
 
 [requires]
 python_version = "3.7"

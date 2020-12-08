@@ -17,8 +17,8 @@ class ActSchema(ItemSchema):
 class SlopeSchema(ItemSchema):
     class Meta(ItemSchema.Meta):
         model = SlopeModel
-        dump_only = ('open_from', 'open_till')
-        load_only = ('open_from', 'open_till')
+        # dump_only = ('open_from', 'open_till')
+        # load_only = ('open_from', 'open_till')
 
 
 class LiftSchema(ItemSchema):

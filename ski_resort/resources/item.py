@@ -24,6 +24,33 @@ class Item(Resource):
         return {'message': NOT_FOUND.format(obj=cls.__name__, name=name)}, 404
 
     @classmethod
+    def get_by_id(cls, _id: int) -> (dict):
+        item = cls.model.find_by_id(_id=_id)
+
+        if item:
+            return {k: v for k, v in cls.schema.dump(item).items() if v}
+
+        return {'message': NOT_FOUND.format(obj=cls.__name__, name=_id)}
+
+    @classmethod
+    def update(cls, _id: int, data: dict) -> (dict, int):
+        item_loads = cls.schema.load(data)
+
+        item = cls.model.find_by_id(_id=_id)
+
+        if item:
+            try:
+                item.update(data)
+                return {'item': {k: v for k, v in cls.schema.dump(item_loads).items() if v},
+                        'message': SUCCESSFULLY_UPDATED.format(obj=cls.__name__, name=_id)}, 201
+            except Exception as e:
+                return {'item': {k: v for k, v in cls.schema.dump(item_loads).items() if v},
+                        'message': ERROR_DATABASE.format(err=e),
+                        'error': e}, 500
+
+        return {"message": NOT_FOUND.format(obj=cls.__name__, name=name)}, 404
+
+    @classmethod
     def post(cls, name: str) -> (dict, int):
         if cls.model.find_by_name(name=name):
             return {'message': ALREADY_EXISTS.format(obj=cls.__name__, name=name)}, 400
@@ -60,6 +87,8 @@ class Item(Resource):
                         'error': e}, 500
 
         return {"message": NOT_FOUND.format(obj=cls.__name__, name=name)}, 404
+
+
 
     @classmethod
     def delete(cls, name: str) -> (dict, int):
