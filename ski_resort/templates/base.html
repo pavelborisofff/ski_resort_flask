@@ -29,7 +29,8 @@
     {% endwith %}
 
     <!--  CONTENT  -->
-    {% block content %} {% endblock %}
-
+    {% block content %}
+    {% endblock %}
+    <script src=".{{ url_for('static', filename='js/input-time.js') }}"></script>
 </body>
 </html>

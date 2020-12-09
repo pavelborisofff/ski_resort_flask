@@ -81,6 +81,7 @@ class SlopeModel(ItemModel):
 class LiftModel(ItemModel):
     __tablename__ = 'lifts'
 
+    length = db.Column(db.Integer)
     night = db.Column(db.Boolean, default=False)
     night_open_from = db.Column(db.String(5), default='19:00')
     night_open_till = db.Column(db.String(5), default='22:45')

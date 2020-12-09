@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required, L
 
 from .my_forms import LoginForm
 from .models.user import UserModel
-from .resources.item import Item, Items, Slope, Slopes
+from .resources.item import Item, Items, Slope, Slopes, Lift, Lifts
 from .resources.weather import Weather
 
 
@@ -46,12 +46,15 @@ def main(app):
 
     @app.route('/')
     @app.route('/index')
-    # @login_required
+    @login_required
     def index():
+        if not current_user.is_authenticated:
+            return redirect(url_for('login'))
+
         return redirect(url_for('page_weather', kind='local', name='Роза Долина', day=0))
 
     @app.route('/<string:kind>/<string:name>/<int:day>',  methods=['POST', 'GET'])
-    # @login_required
+    @login_required
     def page_weather(kind, name, day):
         weather_local = Weather.get(kind, name, day)[0]
 
@@ -86,10 +89,19 @@ def main(app):
         return render_template('login.html', title='Вход', form=_form)
 
     @app.route('/lifts', methods=['GET', 'POST'])
+    @login_required
     def page_lifts():
-        return render_template('lifts.html')
+        if request.method == 'POST':
+            post_items(request, Lift, current_user.name or 'anon')
+            return redirect(url_for('page_lifts'))
+
+        list_items = get_items(Lifts, 'lifts')
+        print(list_items)
+
+        return render_template('lifts.html', list_lifts=list_items)
 
     @app.route('/slopes', methods=['GET', 'POST'])
+    @login_required
     def page_slopes():
         if request.method == 'POST':
             post_items(request, Slope, current_user.name or 'anon')
@@ -100,10 +112,12 @@ def main(app):
         return render_template('slopes.html', list_slopes=list_items)
 
     @app.route('/acts', methods=['GET', 'POST'])
+    @login_required
     def page_acts():
         return render_template('acts.html')
 
     @app.route('/logout')
+    @login_required
     def logout():
         logout_user()
         return redirect(url_for('login'))

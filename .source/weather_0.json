@@ -13,7 +13,7 @@
     "snow_height": 22,
     "snow_height_new": 11,
     "snow_date": "",
-    "snow_avalanche": "1"
+    "snow_avalanche": 1
   },
   {
     "name": "Роза Стадион",
@@ -29,7 +29,7 @@
     "snow_height": 3,
     "snow_height_new": 2,
     "snow_date": "",
-    "snow_avalanche": "1"
+    "snow_avalanche": 1
   },
   {
     "name": "Горная Олимпийская деревня",
@@ -45,7 +45,7 @@
     "snow_height": 20,
     "snow_height_new": 10,
     "snow_date": "",
-    "snow_avalanche": "1"
+    "snow_avalanche": 1
   },
   {
     "name": "Роза 1600",
@@ -61,7 +61,7 @@
     "snow_height": 2,
     "snow_height_new": 1,
     "snow_date": "",
-    "snow_avalanche": "1"
+    "snow_avalanche": 1
   },
   {
     "name": "Роза Пик",
@@ -77,7 +77,7 @@
     "snow_height": 2,
     "snow_height_new": 1,
     "snow_date": "",
-    "snow_avalanche": "1"
+    "snow_avalanche": 1
   },
   {
     "name": "Южный склон",
@@ -93,6 +93,6 @@
     "snow_height": 2,
     "snow_height_new": 1,
     "snow_date": "",
-    "snow_avalanche": "1"
+    "snow_avalanche": 1
   }
 ]
