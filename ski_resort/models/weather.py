@@ -32,6 +32,8 @@ class WeatherZeroModel(ResortItemModel):
     # Wind
     wind_velocity = db.Column(db.Integer, default=0)
     wind_direction = db.Column(db.String(20), default='-')
+    wind_velocity_day = db.Column(db.Integer, default=0)
+    wind_direction_day = db.Column(db.String(20), default='-')
 
     # Snow
     snow_state = db.Column(db.String(80), default='-')
