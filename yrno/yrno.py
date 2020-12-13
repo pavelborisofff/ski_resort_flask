@@ -3,6 +3,7 @@ import json
 import logging
 import random
 import requests
+import traceback
 
 from pprint import pprint
 from typing import Union
@@ -13,6 +14,9 @@ from ski_resort.tools.tech import init_logger
 TZ = 3  # Difference between local and UTC time, hours
 URL = 'https://api.met.no/weatherapi/locationforecast/2.0/complete'  # yr.no API endpoint
 USER_AGENTS_LIST = 'user_agents.txt'
+API_URL = 'http://localhost'
+API_PORT = 5001
+ENDPOINT = '/api/weather/{kind}/{name}/{day}'
 
 # LIST OF GEOLOCATIONS
 POINTS = [
@@ -20,6 +24,26 @@ POINTS = [
      'geonames': 'https://www.geonames.org/8555881/rosa-khutor-alpine-resort-valley.html',
      'coordinates': {'lat': 43.67229, 'lon': 40.29655, 'altitude': 560},
      },
+    {'name': 'РОЗА СТАДИОН',
+     'geonames': 'https://www.geonames.org/8533848/rosa-khutor-alpine-center-finish-940.html',
+     'coordinates': {'lat': 43.64666, 'lon': 40.3321, 'altitude': 940},
+     },
+    {'name': 'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ',
+     'geonames': 'https://www.geonames.org/8533845/rosa-khutor-plateau-1170.html',
+     'coordinates': {'lat': 43.65819, 'lon': 40.31934, 'altitude': 1170},
+     },
+    {'name': 'РОЗА 1600',
+     'geonames': 'https://www.geonames.org/8532034/rosa-khutor-1600.html',
+     'coordinates': {'lat': 43.63865, 'lon': 40.31223, 'altitude': 1600},
+     },
+    {'name': 'РОЗА ПИК',
+     'geonames': 'https://www.geonames.org/8533851/rosa-khutor-peak-2320.html',
+     'coordinates': {'lat': 43.62506, 'lon': 40.31019, 'altitude': 2320},
+     },
+    {'name': 'ЮЖНЫЙ СКЛОН',
+     'geonames': 'https://www.geonames.org/874880/urochishche-kamennyy-stolb.html',
+     'coordinates': {'lat': 43.60472, 'lon': 40.31139, 'altitude': 1925},
+     }
 ]
 
 # LIST OF KEYS TO GETTING DATA FROM YR.NO
@@ -131,26 +155,26 @@ def compare_hours(utc_time: str) -> bool:
         local = datetime.datetime.now()
         return (local.hour - to_local.hour) in (0, 1)
     except ValueError as e:
-        logger.error(f'{utc_time} {e.args} {e.with_traceback}')
+        logger.error(f'{utc_time} {e.args} {traceback.format_exc()}')
         return True  # Because yr.no send current point_weather in first index
 
 
-def get_weather_conds(data: dict) -> list:
+def get_weather_conds(_data: dict) -> list[Union[str, int]]:
     """
     Get point_weather data structured yr.no json
-    :param data: {'time': '2020-12-12T19:00:00Z', 'data': {'instant': {'details': {'air_pressure_at_sea_level': 17.0}}}}
+    :param _data: {'time': '2020-12-12T19:00:00Z', 'data': {'instant': {'details': {'air_pressure_at_sea_level': 17.0}}}}
     :return: []
     """
-    sky_period = data['data'].get('next_1_hours') or data['data'].get('next_6_hours')
+    sky_period = _data['data'].get('next_1_hours') or _data['data'].get('next_6_hours')
     return [
         translate_sky(sky_period['summary']['symbol_code']),
-        round(data['data']['instant']['details']['air_temperature']),
-        round(data['data']['instant']['details']['wind_speed']),
-        get_direction(data['data']['instant']['details']['wind_from_direction'])
+        round(_data['data']['instant']['details']['air_temperature']),
+        round(_data['data']['instant']['details']['wind_speed']),
+        get_direction(_data['data']['instant']['details']['wind_from_direction'])
     ]
 
 
-def get_strftime(diff_to_utc: int = -3) -> list:
+def get_strftime(diff_to_utc: int = -3) -> list[str]:
     """
     Generate keys to search exactly time periods into yr.no data
     :param diff_to_utc:
@@ -190,31 +214,59 @@ def get_strftime(diff_to_utc: int = -3) -> list:
             return hours_ranges[hour_range]
 
 
-def get_point_weather(_weather_data: dict) -> dict:
+def get_point_weather(_weather_data: list[dict]) -> dict[Union[int, dict]]:
     """
     Parse point's weather from yr.no by exactly time periods
-    :param _weather_data: [{'time': '2020-12-13T07:00:00Z', 'data': {…}}, {'time': '2020-12-13T08:00:00Z', 'data': {…}}]
+    :param _weather_data: {'time': '2020-12-13T07:00:00Z', 'data': {…}}, {'time': '2020-12-13T08:00:00Z', 'data': {…}}]
     :return: {'weather_0_yrno': {'weather_sky': 'ОБЛАЧНО', 'weather_temp': 8}}…
     """
     strftime_list = get_strftime()
-    periods = [data for data in _weather_data if data.get('time') in strftime_list]
+
+    periods = []
+    for item in strftime_list:
+        for _data in _weather_data:
+            if _data.get('time') == item:
+                periods.append(_data, )
 
     _point_weather = {
-        'weather_0_yrno': {},
-        'weather_1_yrno': {},
-        'weather_2_yrno': {},
-        'weather_3_yrno': {}
+        0: {},
+        1: {},
+        2: {},
+        3: {}
     }
 
     for i, period in enumerate(periods):
-        if i % 2:
-            point_weather[f'weather_{i // 2}_yrno'].update(
+
+        if i % 2:  # Odd
+            _point_weather[i // 2].update(
                 {k: v for k, v in zip(WEATHER_DAY, get_weather_conds(period))})
-        else:
-            point_weather[f'weather_{i // 2}_yrno'].update(
+        else:  # Even
+            _point_weather[i // 2].update(
                 {k: v for k, v in zip(WEATHER_NOW, get_weather_conds(period))})
 
     return _point_weather
+
+
+def send_to_api(name: str, _data: dict[dict],
+                api_url: str = 'http://localhost',
+                port: int = 5001,
+                endpoint: str = '/api/weather/{kind}/{name}/{day}'):
+
+    for day, weather in data.items():
+        url = f'{api_url}:{port}{endpoint.format(kind="yrno", name=name, day=day)}'
+
+        try:
+            _json = weather
+            print(_json)
+            _response = session.put(url, json=_json)
+
+            if _response.status_code != 201:
+                logger.error(f'{name} error: {_response.status_code} - {_response.json()} {traceback.format_exc()}')
+            else:
+                return True
+
+        except:
+            logger.error('uncaught exception: %s', traceback.format_exc())
 
 
 # Preparation to operate
@@ -229,24 +281,38 @@ session = requests.session()
 # Read list of user agents to rotate it while requesting
 # headers = {"User-Agent": random.choice(headers_list).strip()}
 
+points_weather = {point['name']: {} for point in POINTS}
+
 for point in POINTS:
     try:
         params = point['coordinates']
         response = session.get(URL, params=params, headers=headers, timeout=1)
 
         if response and response.status_code == 200:
+
             try:
                 weather_data = response.json().get('properties', {'result': None}).get('timeseries', {'result': None})
             except json.decoder.JSONDecodeError as e:
                 weather_data = None
-                logger.error(f'Weather data is not json: {e.args}')
+                logger.error(f'Weather data is not json: {e.args} {traceback.format_exc()}')
 
             if weather_data:
                 point_weather = get_point_weather(weather_data)
+                points_weather[point['name']] = point_weather
             else:
                 logger.error(f'Not weather data')
+                logger.error(f'Not weather data: {traceback.format_exc()}')
 
         else:
             logger.warning(f'STATUS CODE: {response.status_code} MESSAGE: {response.json() or response.text}')
+
     except Exception as e:
-        logger.error(f'{e.args} {e.with_traceback}')
+        logger.error(f'uncaught exception: {traceback.format_exc()}',)
+
+
+for point, data in points_weather.items():
+    result = send_to_api(point, data, API_URL, API_PORT, ENDPOINT)
+
+    if result:
+        logger.info(f'{point} {data}')
+
