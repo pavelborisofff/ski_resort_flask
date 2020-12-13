@@ -30,8 +30,8 @@ def create_app(config_class=Config):
     api.add_resource(user.User, '/api/users/<string:name>')
     api.add_resource(user.Users, '/api/users')
 
-    api.add_resource(weather.Weather, '/api/weather/<string:kind>/<string:name>/<int:day>')
-    api.add_resource(weather.WeatherDay, '/api/weather/<string:kind>/<int:day>')
+    api.add_resource(weather.Weather, '/api/point_weather/<string:kind>/<string:name>/<int:day>')
+    api.add_resource(weather.WeatherDay, '/api/point_weather/<string:kind>/<int:day>')
 
     api.add_resource(season.Summer, '/api/season')
 

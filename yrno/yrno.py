@@ -1,8 +1,13 @@
 import datetime
+import json
+import logging
 import random
 import requests
 
+from pprint import pprint
 from typing import Union
+
+from ski_resort.tools.tech import init_logger
 
 # SETTINGS
 TZ = 3  # Difference between local and UTC time, hours
@@ -54,8 +59,8 @@ def get_direction(degrees: float) -> str:
 
 def translate_sky(symbol_code: str) -> str:
     """
-    Translate yr.no weather types to Rosa Khutor's types
-    :param en_name: 'clearsky_day' -> 'clearsky'
+    Translate yr.no point_weather types to Rosa Khutor's types
+    :param symbol_code: 'clearsky_day' -> 'clearsky'
     :return: 'СОЛНЦЕ' or 'None'
     """
     en_name = symbol_code.split('_')[0]
@@ -126,13 +131,13 @@ def compare_hours(utc_time: str) -> bool:
         local = datetime.datetime.now()
         return (local.hour - to_local.hour) in (0, 1)
     except ValueError as e:
-        # logger.error(f'{utc_time} {e.args} {e.with_traceback()}')
-        return True  # Because yr.no send current weather in first index
+        logger.error(f'{utc_time} {e.args} {e.with_traceback}')
+        return True  # Because yr.no send current point_weather in first index
 
 
-def get_weather_conds(data: dict) -> list[str, Union[str, int]]:
+def get_weather_conds(data: dict) -> list:
     """
-    Get weather data structured yr.no json
+    Get point_weather data structured yr.no json
     :param data: {'time': '2020-12-12T19:00:00Z', 'data': {'instant': {'details': {'air_pressure_at_sea_level': 17.0}}}}
     :return: []
     """
@@ -145,7 +150,7 @@ def get_weather_conds(data: dict) -> list[str, Union[str, int]]:
     ]
 
 
-def get_strftime(diff_to_utc: int = -3) -> list[str]:
+def get_strftime(diff_to_utc: int = -3) -> list:
     """
     Generate keys to search exactly time periods into yr.no data
     :param diff_to_utc:
@@ -185,73 +190,63 @@ def get_strftime(diff_to_utc: int = -3) -> list[str]:
             return hours_ranges[hour_range]
 
 
+def get_point_weather(_weather_data: dict) -> dict:
+    """
+    Parse point's weather from yr.no by exactly time periods
+    :param _weather_data: [{'time': '2020-12-13T07:00:00Z', 'data': {…}}, {'time': '2020-12-13T08:00:00Z', 'data': {…}}]
+    :return: {'weather_0_yrno': {'weather_sky': 'ОБЛАЧНО', 'weather_temp': 8}}…
+    """
+    strftime_list = get_strftime()
+    periods = [data for data in _weather_data if data.get('time') in strftime_list]
 
-# Convert UTC time format to local\
-# datetime.tzinfo.tzname()
-# time_to_parse = '2020-12-11T21:06:52Z'
-# utc_time = datetime.datetime.fromisoformat(time_to_parse[:-1])
-# local_time = pytz.utc.localize(utc_time, is_dst=None).astimezone(pytz.timezone(TZ))
+    _point_weather = {
+        'weather_0_yrno': {},
+        'weather_1_yrno': {},
+        'weather_2_yrno': {},
+        'weather_3_yrno': {}
+    }
 
-# List of local points
+    for i, period in enumerate(periods):
+        if i % 2:
+            point_weather[f'weather_{i // 2}_yrno'].update(
+                {k: v for k, v in zip(WEATHER_DAY, get_weather_conds(period))})
+        else:
+            point_weather[f'weather_{i // 2}_yrno'].update(
+                {k: v for k, v in zip(WEATHER_NOW, get_weather_conds(period))})
 
-# Read list of user agents to rotate it while requesting
+    return _point_weather
+
 
 # Preparation to operate
+logger = init_logger('yrno.py')
+
 with open(USER_AGENTS_LIST, encoding='utf8') as f:
     headers_list = f.readlines()
 headers = {"User-Agent": 'for test reasons'}
 
 session = requests.session()
 
-
-
-# headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+# Read list of user agents to rotate it while requesting
 # headers = {"User-Agent": random.choice(headers_list).strip()}
-
-
 
 for point in POINTS:
     try:
         params = point['coordinates']
-        response = session.get(URL, params=params, headers=headers)
+        response = session.get(URL, params=params, headers=headers, timeout=1)
+
         if response and response.status_code == 200:
-            weather_data = response.json().get('properties', {'result': None}).get('timeseries', {'result': None})
-    except Exception as e:
-        print(e)
+            try:
+                weather_data = response.json().get('properties', {'result': None}).get('timeseries', {'result': None})
+            except json.decoder.JSONDecodeError as e:
+                weather_data = None
+                logger.error(f'Weather data is not json: {e.args}')
 
-    strftime_list = get_strftime()
-    periods = [data for data in weather_data if data.get('time') in strftime_list]
-
-    weather = {
-        'weather_0_yrno': {},
-        'weather_1_yrno': {},
-        'weather_2_yrno': {}
-    }
-
-    for day in range(0, 2):
-        for i, period in enumerate(periods[:-1]):
-            print(day, i, period)
-            if i % 2:
-                weather[f'weather_{day}_yrno'].update({k: v for k, v in zip(WEATHER_DAY, get_weather_conds(period))})
+            if weather_data:
+                point_weather = get_point_weather(weather_data)
             else:
-                weather[f'weather_{day}_yrno'].update({k: v for k, v in zip(WEATHER_NOW, get_weather_conds(period))})
-        # {k: v for k, v in zip(WEATHER_NOW, get_weather_conds(period))}
+                logger.error(f'Not weather data')
 
-    # if not compare_hours(weather_data[0]['time']):
-    #     # logger.error(f'{data_now["time"]} CHECK TIME')
-    #     pass
-
-    # if datetime.datetime.now().hour < 6:
-    #     weather['weather_0_yrno'] = {k:v for k,v in zip(WEATHER_NOW, get_weather_conds(weather_data[0]))}
-    #     weather['weather_0_yrno'].update({k: v for k, v in zip(WEATHER_DAY, get_weather_conds(weather_data[0]))})
-    # elif datetime.datetime.now().hour in range(12, 19):
-    #     weather['now_day'] = weather['now']
-    # else:
-
-
-    print(weather)
-
-
-
-
-
+        else:
+            logger.warning(f'STATUS CODE: {response.status_code} MESSAGE: {response.json() or response.text}')
+    except Exception as e:
+        logger.error(f'{e.args} {e.with_traceback}')

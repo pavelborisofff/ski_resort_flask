@@ -9,9 +9,9 @@ baseurl = 'http://localhost'
 port = 5001
 # endpoint = '/api/slopes/'
 # file = 'slopes_south.json'
-endpoints = ['/api/weather/yrno/{}/0', '/api/weather/local/{}/0',
-             '/api/weather/yrno/{}/1', '/api/weather/local/{}/1',
-             '/api/weather/yrno/{}/2', '/api/weather/local/{}/2']
+endpoints = ['/api/point_weather/yrno/{}/0', '/api/point_weather/local/{}/0',
+             '/api/point_weather/yrno/{}/1', '/api/point_weather/local/{}/1',
+             '/api/point_weather/yrno/{}/2', '/api/point_weather/local/{}/2']
 file = 'weather_0.json'
 session = requests.session()
 
