@@ -72,7 +72,7 @@ def main(app):
                     print(response)
             return redirect(url_for('page_weather', kind=kind, name=name, day=day))
 
-        return render_template('point_weather.html', name=name, weather=weather_local)
+        return render_template('weather.html', name=name, weather=weather_local)
 
     @app.route('/login', methods=['POST', 'GET'])
     def login():
