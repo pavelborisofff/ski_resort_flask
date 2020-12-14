@@ -22,7 +22,6 @@ def post_items(_request: request, obj: Item, name: str) -> None:
             if value and value != item[key]:
                 data = {key: value, 'updated_by': name}
                 response = obj.update(_id, data)
-                print(response)
 
 
 def get_items(objs: Items, key: str):
@@ -69,7 +68,6 @@ def main(app):
                 if value != weather_local.get(field):
                     data = {field: value, 'updated_by': current_user.name}
                     response = Weather.update(kind, name, day, data=data)
-                    print(response)
             return redirect(url_for('page_weather', kind=kind, name=name, day=day))
 
         return render_template('weather.html', name=name, weather=weather_local)
@@ -100,7 +98,6 @@ def main(app):
             return redirect(url_for('page_lifts'))
 
         list_items = get_items(Lifts, 'lifts')
-        print(list_items)
 
         return render_template('lifts.html', list_lifts=list_items)
 
