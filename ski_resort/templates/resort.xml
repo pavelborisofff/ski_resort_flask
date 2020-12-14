@@ -8,7 +8,7 @@
         {% set count = loop.index - 1 %}
         <PARAMETERS datevaldeb="{{ date|truncate(10, True, end='') }}" datevalfin="{{ date|truncate(10, True, end='') }}" datemaj="{{ date }}">
             {% for point in values.weather[count] %}
-            <AREA name="{{ point.name|capitalize() }}{% if count > 0 %} J+{{ count }}{% endif %}" name_en="{{ point.name_en|capitalize() }}" altitude="{{ point.height }}" reference="{{ point.name|capitalize() }}">
+            <AREA name="{{ point.name|title() }}{% if count > 0 %} J+{{ count }}{% endif %}" name_en="{{ point.name_en|title() }}" altitude="{{ point.height }}" reference="{{ point.name|title() }}">
                 <VALRISK>{{ point.snow_avalanche }}</VALRISK>
                 {% set librisk = {1: 'Безопасно', 2: 'Незначительно', 3: 'Средне', 4: 'Опасно', 5: 'Очень опасно', 0: 'Неизвестно' } %}
                 <LIBRISK>{{ librisk.get(point.snow_avalanche) }}</LIBRISK>
@@ -40,10 +40,10 @@
                 <SKY_ID>{{ sky_id[point.weather_sky] }}</SKY_ID>
                 <SKY_ID_AFT>{{ sky_id[point.weather_sky] }}</SKY_ID_AFT>
                 <LAST_SNOW>{{  point.snow_date }}</LAST_SNOW>
-                <F_RAIN_SNOW_LIMIT>{{  point.weather_rain_limit }}</F_RAIN_SNOW_LIMIT>
-                <M_RAIN_SNOW_LIMIT>{{  point.weather_rain_limit }}</M_RAIN_SNOW_LIMIT>
-                <UV_INDEX>{{  point.weather_uv }}</UV_INDEX>
-                <STORM_RISK>{{  point.weather_storm_risk }}</STORM_RISK>
+                <F_RAIN_SNOW_LIMIT>{{ point.weather_rain_limit }}</F_RAIN_SNOW_LIMIT>
+                <M_RAIN_SNOW_LIMIT>{{ point.weather_rain_limit }}</M_RAIN_SNOW_LIMIT>
+                <UV_INDEX>{{ point.weather_uv }}</UV_INDEX>
+                <STORM_RISK>{{ point.weather_storm_risk }}</STORM_RISK>
             </AREA>
             {% endfor %}
         </PARAMETERS>

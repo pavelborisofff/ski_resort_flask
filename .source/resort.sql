@@ -233,6 +233,8 @@ CREATE TABLE `weather_0_local` (
   `snow_height_new` int DEFAULT NULL,
   `snow_date` varchar(20) DEFAULT NULL,
   `snow_avalanche` int DEFAULT NULL,
+  `wind_velocity_day` int DEFAULT '0',
+  `wind_direction_day` varchar(20) DEFAULT '-',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `name_en` (`name_en`),
@@ -246,7 +248,7 @@ CREATE TABLE `weather_0_local` (
 
 LOCK TABLES `weather_0_local` WRITE;
 /*!40000 ALTER TABLE `weather_0_local` DISABLE KEYS */;
-INSERT INTO `weather_0_local` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.629105','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.725530','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.795601','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.876098','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.951380','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.022866','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1);
+INSERT INTO `weather_0_local` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.629105','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1,0,'-'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.725530','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1,0,'-'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.795601','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1,0,'-'),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.876098','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1,0,'-'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.951380','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1,0,'-'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.022866','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1,0,'-');
 /*!40000 ALTER TABLE `weather_0_local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,11 +278,13 @@ CREATE TABLE `weather_0_yrno` (
   `snow_height_new` int DEFAULT NULL,
   `snow_date` varchar(20) DEFAULT NULL,
   `snow_avalanche` int DEFAULT NULL,
+  `wind_velocity_day` int DEFAULT '0',
+  `wind_direction_day` varchar(20) DEFAULT '-',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `name_en` (`name_en`),
   CONSTRAINT `weather_0_yrno_chk_1` CHECK ((`inactive` in (0,1)))
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,7 +293,7 @@ CREATE TABLE `weather_0_yrno` (
 
 LOCK TABLES `weather_0_yrno` WRITE;
 /*!40000 ALTER TABLE `weather_0_yrno` DISABLE KEYS */;
-INSERT INTO `weather_0_yrno` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.611618','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.713811','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.783888','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.860800','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.939576','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.010572','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1);
+INSERT INTO `weather_0_yrno` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-14 07:59:39.431005','root',0,560,'ОБЛАЧНО',4,'ОБЛАЧНО',14,1,'NE','СВЕЖИЙ',22,11,'',1,1,'NE'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-14 07:59:39.505322','root',0,960,'ОБЛАЧНО',4,'ОБЛАЧНО',11,2,'E','СВЕЖИЙ',3,2,'',1,1,'E'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-14 07:59:39.556487','root',0,1100,'ОБЛАЧНО',0,'ОБЛАЧНО',10,1,'NE','СВЕЖИЙ',20,10,'',1,1,'NE'),(4,'РОЗА 1600','ROSA 1600','2020-12-14 07:59:39.606576','root',0,1600,'ОБЛАЧНО',0,'ОБЛАЧНО',7,2,'E','СВЕЖИЙ',2,1,'',1,1,'E'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-14 07:59:39.655459','root',0,2320,'ОБЛАЧНО',-4,'ОБЛАЧНО',3,2,'E','СВЕЖИЙ',2,1,'',1,1,'E'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-14 07:59:39.703952','root',0,1925,'ОБЛАЧНО',-2,'ОБЛАЧНО',5,2,'E','СВЕЖИЙ',2,1,'',1,1,'E');
 /*!40000 ALTER TABLE `weather_0_yrno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,6 +323,8 @@ CREATE TABLE `weather_1_local` (
   `snow_height_new` int DEFAULT NULL,
   `snow_date` varchar(20) DEFAULT NULL,
   `snow_avalanche` int DEFAULT NULL,
+  `wind_velocity_day` int DEFAULT '0',
+  `wind_direction_day` varchar(20) DEFAULT '-',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `name_en` (`name_en`),
@@ -332,7 +338,7 @@ CREATE TABLE `weather_1_local` (
 
 LOCK TABLES `weather_1_local` WRITE;
 /*!40000 ALTER TABLE `weather_1_local` DISABLE KEYS */;
-INSERT INTO `weather_1_local` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.662251','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.748978','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.820635','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.902746','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.975260','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.045956','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1);
+INSERT INTO `weather_1_local` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.662251','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1,0,'-'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.748978','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1,0,'-'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.820635','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1,0,'-'),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.902746','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1,0,'-'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.975260','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1,0,'-'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.045956','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1,0,'-');
 /*!40000 ALTER TABLE `weather_1_local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,6 +368,8 @@ CREATE TABLE `weather_1_yrno` (
   `snow_height_new` int DEFAULT NULL,
   `snow_date` varchar(20) DEFAULT NULL,
   `snow_avalanche` int DEFAULT NULL,
+  `wind_velocity_day` int DEFAULT '0',
+  `wind_direction_day` varchar(20) DEFAULT '-',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `name_en` (`name_en`),
@@ -375,7 +383,7 @@ CREATE TABLE `weather_1_yrno` (
 
 LOCK TABLES `weather_1_yrno` WRITE;
 /*!40000 ALTER TABLE `weather_1_yrno` DISABLE KEYS */;
-INSERT INTO `weather_1_yrno` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.645902','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.737058','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.808004','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.890617','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.963467','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.034623','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1);
+INSERT INTO `weather_1_yrno` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-14 07:59:39.459096','root',0,560,'ПАСМУРНО',3,'ПАСМУРНО',14,1,'NE','СВЕЖИЙ',22,11,'',1,1,'E'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-14 07:59:39.520815','root',0,960,'ПАСМУРНО',3,'ПАСМУРНО',12,2,'E','СВЕЖИЙ',3,2,'',1,0,'SE'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-14 07:59:39.570266','root',0,1100,'ПАСМУРНО',-1,'ПАСМУРНО',10,1,'NE','СВЕЖИЙ',20,10,'',1,1,'E'),(4,'РОЗА 1600','ROSA 1600','2020-12-14 07:59:39.619296','root',0,1600,'ПАСМУРНО',-1,'ПАСМУРНО',8,2,'E','СВЕЖИЙ',2,1,'',1,0,'SE'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-14 07:59:39.668694','root',0,2320,'ПАСМУРНО',-6,'ПАСМУРНО',4,2,'E','СВЕЖИЙ',2,1,'',1,0,'SE'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-14 07:59:39.715155','root',0,1925,'ПАСМУРНО',-3,'ПАСМУРНО',6,2,'E','СВЕЖИЙ',2,1,'',1,0,'SE');
 /*!40000 ALTER TABLE `weather_1_yrno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,6 +413,8 @@ CREATE TABLE `weather_2_local` (
   `snow_height_new` int DEFAULT NULL,
   `snow_date` varchar(20) DEFAULT NULL,
   `snow_avalanche` int DEFAULT NULL,
+  `wind_velocity_day` int DEFAULT '0',
+  `wind_direction_day` varchar(20) DEFAULT '-',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `name_en` (`name_en`),
@@ -418,7 +428,7 @@ CREATE TABLE `weather_2_local` (
 
 LOCK TABLES `weather_2_local` WRITE;
 /*!40000 ALTER TABLE `weather_2_local` DISABLE KEYS */;
-INSERT INTO `weather_2_local` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.695772','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.772200','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.847627','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.927853','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.998174','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.068513','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1);
+INSERT INTO `weather_2_local` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.695772','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1,0,'-'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.772200','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1,0,'-'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.847627','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1,0,'-'),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.927853','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1,0,'-'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.998174','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1,0,'-'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.068513','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1,0,'-');
 /*!40000 ALTER TABLE `weather_2_local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -448,6 +458,8 @@ CREATE TABLE `weather_2_yrno` (
   `snow_height_new` int DEFAULT NULL,
   `snow_date` varchar(20) DEFAULT NULL,
   `snow_avalanche` int DEFAULT NULL,
+  `wind_velocity_day` int DEFAULT '0',
+  `wind_direction_day` varchar(20) DEFAULT '-',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `name_en` (`name_en`),
@@ -461,7 +473,7 @@ CREATE TABLE `weather_2_yrno` (
 
 LOCK TABLES `weather_2_yrno` WRITE;
 /*!40000 ALTER TABLE `weather_2_yrno` DISABLE KEYS */;
-INSERT INTO `weather_2_yrno` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-09 12:56:02.678397','root',0,560,'СОЛНЦЕ',15,'СОЛНЦЕ',16,1,'SE','СВЕЖИЙ',22,11,'',1),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-09 12:56:02.760337','root',0,960,'СОЛНЦЕ',-20,'СОЛНЦЕ',-10,5,'W','СВЕЖИЙ',3,2,'',1),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-09 12:56:02.834387','root',0,1100,'ПАСМУРНО',20,'ПАСМУРНО',23,3,'NE','СВЕЖИЙ',20,10,'',1),(4,'РОЗА 1600','ROSA 1600','2020-12-09 12:56:02.915428','root',0,1600,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1),(5,'РОЗА ПИК','ROSA PEAK','2020-12-09 12:56:02.986745','root',0,2320,'СОЛНЦЕ',25,'СОЛНЦЕ',22,3,'SE','СВЕЖИЙ',2,1,'',1),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-09 12:56:03.057300','root',0,1925,'СОЛНЦЕ',-2,'СОЛНЦЕ',-1,5,'W','СВЕЖИЙ',2,1,'',1);
+INSERT INTO `weather_2_yrno` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-14 07:59:39.477387','root',0,560,'ДОЖДЬ',7,'ДОЖДЬ',8,0,'NE','СВЕЖИЙ',22,11,'',1,0,'SW'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-14 07:59:39.532925','root',0,960,'ДОЖДЬ',5,'ДОЖДЬ',6,1,'E','СВЕЖИЙ',3,2,'',1,0,'SE'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-14 07:59:39.584330','root',0,1100,'ДОЖДЬ',3,'ДОЖДЬ',5,0,'NE','СВЕЖИЙ',20,10,'',1,0,'SW'),(4,'РОЗА 1600','ROSA 1600','2020-12-14 07:59:39.630768','root',0,1600,'ДОЖДЬ',1,'ДОЖДЬ',2,1,'E','СВЕЖИЙ',2,1,'',1,0,'SE'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-14 07:59:39.681454','root',0,2320,'СНЕГ',-4,'СНЕГ',-2,1,'E','СВЕЖИЙ',2,1,'',1,0,'SE'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-14 07:59:39.726650','root',0,1925,'СНЕГ',-1,'СНЕГ',0,1,'E','СВЕЖИЙ',2,1,'',1,0,'SE');
 /*!40000 ALTER TABLE `weather_2_yrno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,7 +502,7 @@ CREATE TABLE `weather_3_local` (
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `name_en` (`name_en`),
   CONSTRAINT `weather_3_local_chk_1` CHECK ((`inactive` in (0,1)))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -499,6 +511,7 @@ CREATE TABLE `weather_3_local` (
 
 LOCK TABLES `weather_3_local` WRITE;
 /*!40000 ALTER TABLE `weather_3_local` DISABLE KEYS */;
+INSERT INTO `weather_3_local` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-14 00:17:04.043081','root',0,560,'ДОЖДЬ',9,'-',0,0,'S'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-14 00:17:04.086606','root',0,960,'ПАСМУРНО',7,'-',0,0,'NW'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-14 00:17:04.135599','root',0,1100,'ДОЖДЬ',5,'-',0,0,'S'),(4,'РОЗА 1600','ROSA 1600','2020-12-14 00:17:04.178888','root',0,1600,'ПАСМУРНО',3,'-',0,0,'NW'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-14 00:17:04.221122','root',0,2320,'ПАСМУРНО',-2,'-',0,0,'NW'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-14 00:17:04.265729','root',0,1925,'ПАСМУРНО',1,'-',0,0,'NW');
 /*!40000 ALTER TABLE `weather_3_local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -527,7 +540,7 @@ CREATE TABLE `weather_3_yrno` (
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `name_en` (`name_en`),
   CONSTRAINT `weather_3_yrno_chk_1` CHECK ((`inactive` in (0,1)))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -536,6 +549,7 @@ CREATE TABLE `weather_3_yrno` (
 
 LOCK TABLES `weather_3_yrno` WRITE;
 /*!40000 ALTER TABLE `weather_3_yrno` DISABLE KEYS */;
+INSERT INTO `weather_3_yrno` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-14 07:59:39.491608','root',0,560,'ОБЛАЧНО',5,'-',0,1,'W'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-14 07:59:39.544385','root',0,960,'ОБЛАЧНО',4,'-',0,1,'W'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-14 07:59:39.594950','root',0,1100,'ОБЛАЧНО',2,'-',0,1,'W'),(4,'РОЗА 1600','ROSA 1600','2020-12-14 07:59:39.642270','root',0,1600,'ОБЛАЧНО',0,'-',0,1,'W'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-14 07:59:39.692537','root',0,2320,'ОБЛАЧНО',-5,'-',0,1,'W'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-14 07:59:39.739472','root',0,1925,'ОБЛАЧНО',-2,'-',0,1,'W');
 /*!40000 ALTER TABLE `weather_3_yrno` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -548,4 +562,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-13 10:13:52
+-- Dump completed on 2020-12-14  8:05:16

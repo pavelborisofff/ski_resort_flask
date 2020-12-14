@@ -21,10 +21,9 @@ requests = "*"
 flask-wtf = "*"
 flask-login = "*"
 cryptography = "*"
-json2xml = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.9"
 
 [pipenv]
 allow_prereleases = true
