@@ -10,7 +10,7 @@ class ValriskSchema(ma.SQLAlchemyAutoSchema):
         strict = True
 
 
-class VWeatherSourceSchema(ma.SQLAlchemyAutoSchema):
+class WeatherSourceSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = WeatherSourceModel
         load_instance = True

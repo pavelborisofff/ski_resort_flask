@@ -19,13 +19,13 @@ class Valrisk(Resource):
     schema = ValriskSchema()
 
     @classmethod
-    def get_by_id(cls) -> dict:
-        valrisk = cls.model.find_by_id(_id=1)
+    def get(cls) -> (dict, int):
+        item = cls.model.find_by_id(_id=1)
 
-        if valrisk:
-            return {k: v for k, v in cls.schema.dump(valrisk).items() if v}
+        if item:
+            return {k: v for k, v in cls.schema.dump(item).items() if v}, 200
 
-        return {'message': NOT_FOUND.format(obj=cls.__name__, name=1)}
+        return {'message': NOT_FOUND.format(obj=cls.__name__, name=1)}, 404
 
     @classmethod
     def post(cls) -> (dict, int):
@@ -61,14 +61,17 @@ class Valrisk(Resource):
 
 
 class WeatherSource(Resource):
+    model = WeatherSourceModel
+    schema = WeatherSourceSchema()
+
     @classmethod
-    def get_by_id(cls) -> dict:
-        weather_source = cls.model.find_by_id(_id=1)
+    def get(cls) -> (dict, int):
+        item = cls.model.find_by_id(_id=1)
 
-        if weather_source:
-            return {k: v for k, v in cls.schema.dump(weather_source).items() if v}
+        if item:
+            return {k: v for k, v in cls.schema.dump(item).items() if v}, 200
 
-        return {'message': NOT_FOUND.format(obj=cls.__name__, name=1)}
+        return {'message': NOT_FOUND.format(obj=cls.__name__, name=1)}, 404
 
     @classmethod
     def post(cls) -> (dict, int):
