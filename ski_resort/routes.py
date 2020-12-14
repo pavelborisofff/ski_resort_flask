@@ -1,12 +1,16 @@
+import datetime
+
 import requests
 
-from flask import request, flash, redirect, url_for, render_template, session, send_from_directory, jsonify
+from flask import request, flash, redirect, url_for, render_template, session, send_from_directory, jsonify, Response, \
+    make_response
 from flask_login import current_user, login_user, logout_user, login_required, LoginManager
+from pprint import pprint
 
 from .my_forms import LoginForm
 from .models.user import UserModel
 from .resources.item import Item, Items, Slope, Slopes, Lift, Lifts
-from .resources.weather import Weather
+from .resources.weather import Weather, WeatherDay
 
 
 def post_items(_request: request, obj: Item, name: str) -> None:
@@ -122,6 +126,55 @@ def main(app):
         logout_user()
         return redirect(url_for('login'))
 
+    @app.route('/russia-russia-local.xml')
+    @app.route('/xml')
+    def xml():
+
+        # values = [
+        #     {'name': 'John', 'surname': 'Doe', 'age': 25},
+        #     {'name': 'Jane', 'surname': 'Doe', 'age': 19}
+        # ]
+
+        now = datetime.datetime.now()
+
+        weather = [WeatherDay.get('yrno', i)[0]['weatherday'] for i in range(4)]
+
+        dates = []
+        for i in range(4):
+            today = datetime.datetime.now() + datetime.timedelta(days=i)
+            dates.append(datetime.datetime.strftime(today, '%d/%m/%Y %H:%M'))
+
+        valrisk = ['']
+
+        lifts = get_items(Lifts, 'lifts')
+
+        all_slopes = get_items(Slopes, 'slopes')
+        slopes = []
+        slopes_south = []
+        for slope in all_slopes:
+            if slope.get('south'):
+                slopes_south.append(slope)
+            else:
+                slopes.append(slope)
+
+        values = {
+            'year': now.year,
+            'weather': weather,
+            'dates': dates,
+            'valrisk': valrisk,
+            'lifts': lifts,
+            'slopes': slopes,
+            'slopes_south': slopes_south
+        }
+
+        template = render_template('resort.xml', values=values)
+
+        response = make_response(template)
+        response.headers['Content-Type'] = 'application/xml'
+
+        return response
+
+        # return render_template('resort.xml', mimetype='text/xml')
 
 
 # flash('Login requested for user {}, remember_me={}'.format(

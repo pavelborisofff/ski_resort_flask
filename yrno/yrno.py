@@ -1,11 +1,9 @@
 import datetime
 import json
-import logging
 import random
 import requests
 import traceback
 
-from pprint import pprint
 from typing import Union
 
 from ski_resort.tools.tech import init_logger
@@ -247,46 +245,52 @@ def get_point_weather(_weather_data: list[dict]) -> dict[Union[int, dict]]:
     return _point_weather
 
 
-def send_to_api(name: str, _data: dict[dict],
+def send_to_api(_name: str, _weather: dict[dict], _day: int,
                 api_url: str = 'http://localhost',
                 port: int = 5001,
                 endpoint: str = '/api/weather/{kind}/{name}/{day}'):
+    """
+    Sending data about resort's weather to DB via API, for exact day and location
+    :param _name: 'ЮЖНЫЙ СКЛОН'
+    :param _weather: {'weather_sky': 'ПАСМУРНО', 'weather_temp': -2, …}
+    :param _day: 0-3 in this case
+    :param api_url: API base url
+    :param port: API port
+    :param endpoint: API endpoint
+    :return: True in case completed update info via API
+    """
 
-    for day, weather in data.items():
-        url = f'{api_url}:{port}{endpoint.format(kind="yrno", name=name, day=day)}'
+    url = f'{api_url}:{port}{endpoint.format(kind="yrno", name=_name, day=_day)}'
 
-        try:
-            _json = weather
-            print(_json)
-            _response = session.put(url, json=_json)
+    try:
+        _json = weather
+        _response = session.put(url, json=_json)
 
-            if _response.status_code != 201:
-                logger.error(f'{name} error: {_response.status_code} - {_response.json()} {traceback.format_exc()}')
-            else:
-                return True
+        if _response.status_code != 201:
+            logger.error(f'{_name} error: {_response.status_code} - {_response.json()} {traceback.format_exc()}')
+        else:
+            return True
 
-        except:
-            logger.error('uncaught exception: %s', traceback.format_exc())
+    except:
+        logger.error(f'uncaught exception: {traceback.format_exc()}')
 
 
 # Preparation to operate
 logger = init_logger('yrno.py')
-
-with open(USER_AGENTS_LIST, encoding='utf8') as f:
-    headers_list = f.readlines()
-headers = {"User-Agent": 'for test reasons'}
-
 session = requests.session()
 
 # Read list of user agents to rotate it while requesting
-# headers = {"User-Agent": random.choice(headers_list).strip()}
+with open(USER_AGENTS_LIST, encoding='utf8') as f:
+    headers_list = f.readlines()
+headers = {"User-Agent": random.choice(headers_list).strip()}
+# headers = {"User-Agent": 'for test reasons'}
 
 points_weather = {point['name']: {} for point in POINTS}
 
 for point in POINTS:
     try:
         params = point['coordinates']
-        response = session.get(URL, params=params, headers=headers, timeout=1)
+        response = session.get(URL, params=params, headers=headers, timeout=3)
 
         if response and response.status_code == 200:
 
@@ -307,12 +311,14 @@ for point in POINTS:
             logger.warning(f'STATUS CODE: {response.status_code} MESSAGE: {response.json() or response.text}')
 
     except Exception as e:
-        logger.error(f'uncaught exception: {traceback.format_exc()}',)
+        logger.error(f'{point["name"]}')
+        logger.error(f'uncaught exception: {traceback.format_exc()}')
 
 
-for point, data in points_weather.items():
-    result = send_to_api(point, data, API_URL, API_PORT, ENDPOINT)
+for name, data in points_weather.items():
+    for day, weather in data.items():
+        result = send_to_api(name, data, day, API_URL, API_PORT, ENDPOINT)
 
-    if result:
-        logger.info(f'{point} {data}')
+        if result:
+            logger.info(f'{name} {day} {weather}')
 

@@ -35,4 +35,6 @@ def create_app(config_class=Config):
 
     api.add_resource(season.Summer, '/api/season')
 
+    # api.add_resource(season.Xml, '/api/russia-russia-local.xml')
+
     return app

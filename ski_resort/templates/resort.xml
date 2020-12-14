@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RESORT name="ROSA KHUTOR" lang="ru" version="2.3">
+    <PERIOD datevaldeb="13/11/{{ values.year }}" datevalfin="21/04/{{ values.year }}" lib="Winter"/>
+    <PERIOD datevaldeb="22/04/{{ values.year }}" datevalfin="12/11/{{ values.year }}" lib="Summer"/>
+    <INFODATE>{{ values.dates[0] }}</INFODATE>
+    <WEATHER>
+        {% for date in values.dates %}
+        {% set count = loop.index - 1 %}
+        <PARAMETERS datevaldeb="{{ date|truncate(10, True, end='') }}" datevalfin="{{ date|truncate(10, True, end='') }}" datemaj="{{ date }}">
+            {% for point in values.weather[count] %}
+            <AREA name="{{ point.name|capitalize() }}{% if count > 0 %} J+{{ count }}{% endif %}" name_en="{{ point.name_en|capitalize() }}" altitude="{{ point.height }}" reference="{{ point.name|capitalize() }}">
+                <VALRISK>{{ point.snow_avalanche }}</VALRISK>
+                {% set librisk = {1: 'Безопасно', 2: 'Незначительно', 3: 'Средне', 4: 'Опасно', 5: 'Очень опасно', 0: 'Неизвестно' } %}
+                <LIBRISK>{{ librisk.get(point.snow_avalanche) }}</LIBRISK>
+                <REAL_RISK>0</REAL_RISK>
+                <F_TEMPERATURE>{{ point.weather_temp }}</F_TEMPERATURE>
+                <C_TEMPERATURE>{{ point.weather_temp }}</C_TEMPERATURE>
+                <F_TEMPERATURE_AFT>{{ point.weather_temp_day }}</F_TEMPERATURE_AFT>
+                <C_TEMPERATURE_AFT>{{ point.weather_temp_day }}</C_TEMPERATURE_AFT>
+                <F_TEMPERATURE_FELT>{{ point.weather_temp_day }}</F_TEMPERATURE_FELT>
+                <C_TEMPERATURE_FELT>{{ point.weather_temp_day }}</C_TEMPERATURE_FELT>
+                <I_SNOW>{{ point.snow_height_new }}</I_SNOW>
+                <C_SNOW>{{ point.snow_height_new }}</C_SNOW>
+                <I_ACCUMULATION>{{ point.snow_height }}</I_ACCUMULATION>
+                <C_ACCUMULATION>{{ point.snow_height }}</C_ACCUMULATION>
+                <M_WIND>{{ point.wind_velocity }}</M_WIND>
+                <K_WIND>{{ point.wind_velocity }}</K_WIND>
+                <DIRECTION>{{ point.wind_direction }}</DIRECTION>
+                <M_WIND_AFT>{{ point.wind_velocity_day }}</M_WIND_AFT>
+                <K_WIND_AFT>{{ point.wind_velocity_day }}</K_WIND_AFT>
+                <DIRECTION_AFT>{{ point.wind_direction_day }}</DIRECTION_AFT>
+                <M_GUSTS>0</M_GUSTS>
+                <K_GUSTS>0</K_GUSTS>
+                <QUALITY>{{ point.snow_state }}</QUALITY>
+                <QLT_ID>106</QLT_ID>
+                <VISIBILITY>100</VISIBILITY>
+                <SKY>{{ point.weather_sky }}</SKY>
+                <SKY_AFT>{{ point.weather_sky_day }}</SKY_AFT>
+                {% set sky_id = {'СОЛНЦЕ': 1, 'СОЛНЕЧНО': 2, 'ОБЛАЧНО': 3, 'ПАСМУРНО': 4, 'ДОЖДЬ': 5, 'СНЕГ': 6, 'БУРЯ': 7, 'None': 0} %}
+                <SKY_ID>{{ sky_id[point.weather_sky] }}</SKY_ID>
+                <SKY_ID_AFT>{{ sky_id[point.weather_sky] }}</SKY_ID_AFT>
+                <LAST_SNOW>{{  point.snow_date }}</LAST_SNOW>
+                <F_RAIN_SNOW_LIMIT>{{  point.weather_rain_limit }}</F_RAIN_SNOW_LIMIT>
+                <M_RAIN_SNOW_LIMIT>{{  point.weather_rain_limit }}</M_RAIN_SNOW_LIMIT>
+                <UV_INDEX>{{  point.weather_uv }}</UV_INDEX>
+                <STORM_RISK>{{  point.weather_storm_risk }}</STORM_RISK>
+            </AREA>
+            {% endfor %}
+        </PARAMETERS>
+        {% endfor %}
+        <REPORTS>
+            <TODAY/>
+            <TOMORROW/>
+            <WEEK/>
+        </REPORTS>
+        <INDICATOR nom="RK" nom_en="RK">
+            <SKIABLE val="0" lib="0 : станция закрыта"/>
+            <ENVIRONMENT val="0" lib="Полный: полный снежный объем"/>
+            <RETURN_SKI val="0" lib="Полный: все секторы станции гарантированы"/>
+            <ROAD_CONDITION val="0" lib="Дороги расчищены, нормальное движение"/>
+            <TRAILS total="63" open="0" closed="63" planned="0" open_planned="0"/>
+            <GREEN_TRAILS total="13" open="0"/>
+            <BLUE_TRAILS total="22" open="0"/>
+            <RED_TRAILS total="16" open="0"/>
+            <BLACK_TRAILS total="12" open="0"/>
+            <GREEN_CIRCLE_TRAILS total="0" open="0"/>
+            <D_GREEN_CIRCLE_TRAILS total="0" open="0"/>
+            <BLUE_SQUARE_TRAILS total="0" open="0"/>
+            <D_BLUE_SQUARE_TRAILS total="0" open="0"/>
+            <BLACK_DIAMOND_TRAILS total="0" open="0"/>
+            <D_BLACK_DIAMOND_TRAILS total="0" open="0"/>
+            <TERRAIN_PARKS_TRAILS total="0" open="0"/>
+            <SKI_LIFTS total="32" open="0" closed="24" planned="8" open_planned="8"/>
+            <KM_CROSS_COUNTRY_SKIING open="0"/>
+        </INDICATOR>
+    </WEATHER>
+    <STATES>
+        <AREA nom="АКТИВНОСТИ" nom_en="ACTIVITIES"></AREA>
+        <AREA nom="Подъемники" nom_en="LIFTS">
+            {% for lift in values.lifts %}
+            <LIFT name="{{ lift.name }}" name_en="{{ lift.name_en }}" state="{{ lift.state }}" type="{{ lift.type }}" msg="" queue="0"/>
+            {% endfor %}
+        </AREA>
+        <AREA nom="Трассы" nom_en="SLOPES">
+            {% for slope in values.slopes %}
+            <TRAIL name="{{ slope.name }}" name_en="{{ slope.name_en }}" state="{{ slope.state }}" type="{{ slope.type }}" level="{{ slope.level }}" msg=""
+                   maintenance_txt="" maintenance_num="0"/>
+            {% endfor %}
+        </AREA>
+        <AREA nom="ЮЖНЫЙ СКЛОН" nom_en="SOUTH SLOPE">
+            {% for slope in values.slopes_south %}
+            <TRAIL name="{{ slope.name }}" name_en="{{ slope.name_en }}" state="{{ slope.state }}" type="{{ slope.type }}" level="{{ slope.level }}" msg=""
+                   maintenance_txt="" maintenance_num="0"/>
+            {% endfor %}
+        </AREA>
+    </STATES>
+</RESORT>
