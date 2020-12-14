@@ -208,6 +208,30 @@ INSERT INTO `users` VALUES (1,'rosa',NULL,'2020-12-09 12:55:14.831553','root',0,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `valrisk`
+--
+
+DROP TABLE IF EXISTS `valrisk`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `valrisk` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `value` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `valrisk`
+--
+
+LOCK TABLES `valrisk` WRITE;
+/*!40000 ALTER TABLE `valrisk` DISABLE KEYS */;
+INSERT INTO `valrisk` VALUES (1,'НЕТ');
+/*!40000 ALTER TABLE `valrisk` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `weather_0_local`
 --
 
@@ -552,6 +576,31 @@ LOCK TABLES `weather_3_yrno` WRITE;
 INSERT INTO `weather_3_yrno` VALUES (1,'РОЗА ДОЛИНА','ROSA VALLEY','2020-12-14 07:59:39.491608','root',0,560,'ОБЛАЧНО',5,'-',0,1,'W'),(2,'РОЗА СТАДИОН','ROSA STADIUM','2020-12-14 07:59:39.544385','root',0,960,'ОБЛАЧНО',4,'-',0,1,'W'),(3,'ГОРНАЯ ОЛИМПИЙСКАЯ ДЕРЕВНЯ','ALPINE OLYMPIC VILLAGE','2020-12-14 07:59:39.594950','root',0,1100,'ОБЛАЧНО',2,'-',0,1,'W'),(4,'РОЗА 1600','ROSA 1600','2020-12-14 07:59:39.642270','root',0,1600,'ОБЛАЧНО',0,'-',0,1,'W'),(5,'РОЗА ПИК','ROSA PEAK','2020-12-14 07:59:39.692537','root',0,2320,'ОБЛАЧНО',-5,'-',0,1,'W'),(6,'ЮЖНЫЙ СКЛОН','SOUTHERN SLOPE','2020-12-14 07:59:39.739472','root',0,1925,'ОБЛАЧНО',-2,'-',0,1,'W');
 /*!40000 ALTER TABLE `weather_3_yrno` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `weather_source`
+--
+
+DROP TABLE IF EXISTS `weather_source`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `weather_source` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `local` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `weather_source_chk_1` CHECK ((`local` in (0,1)))
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `weather_source`
+--
+
+LOCK TABLES `weather_source` WRITE;
+/*!40000 ALTER TABLE `weather_source` DISABLE KEYS */;
+INSERT INTO `weather_source` VALUES (1,1);
+/*!40000 ALTER TABLE `weather_source` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -562,4 +611,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-14  8:05:16
+-- Dump completed on 2020-12-14  8:32:06

@@ -32,6 +32,8 @@ def create_app(config_class=Config):
 
     api.add_resource(weather.Weather, '/api/weather/<string:kind>/<string:name>/<int:day>')
     api.add_resource(weather.WeatherDay, '/api/weather/<string:kind>/<int:day>')
+    api.add_resource(weather.Valrisk, '/api/valrisk')
+    api.add_resource(weather.WeatherSource, '/api/weather_source')
 
     api.add_resource(season.Summer, '/api/season')
 

@@ -1,5 +1,20 @@
 from ski_resort.db import db
+from ski_resort.models.base import BaseModel
 from ski_resort.models.item import ResortItemModel
+
+
+class ValriskModel(BaseModel):
+    __tablename__ = 'valrisk'
+
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.String(80), default='-')
+
+
+class WeatherSourceModel(BaseModel):
+    __tablename__ = 'weather_source'
+
+    id = db.Column(db.Integer, primary_key=True)
+    local = db.Column(db.Boolean, default=False)
 
 
 class WeatherModel(ResortItemModel):

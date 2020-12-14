@@ -129,14 +129,6 @@ def main(app):
     @app.route('/russia-russia-local.xml')
     @app.route('/xml')
     def xml():
-
-        # values = [
-        #     {'name': 'John', 'surname': 'Doe', 'age': 25},
-        #     {'name': 'Jane', 'surname': 'Doe', 'age': 19}
-        # ]
-
-        now = datetime.datetime.now()
-
         weather = [WeatherDay.get('yrno', i)[0]['weatherday'] for i in range(4)]
 
         dates = []
@@ -158,7 +150,7 @@ def main(app):
                 slopes.append(slope)
 
         values = {
-            'year': now.year,
+            'year': datetime.datetime.now().year,
             'weather': weather,
             'dates': dates,
             'valrisk': valrisk,
@@ -173,17 +165,3 @@ def main(app):
         response.headers['Content-Type'] = 'application/xml'
 
         return response
-
-        # return render_template('resort.xml', mimetype='text/xml')
-
-
-# flash('Login requested for user {}, remember_me={}'.format(
-#     form.username.data, form.remember_me.data))
-
-# if request.method == 'POST':
-#     user = request.form['nm']
-#     session['user'] = user
-#     return render_template(url_for('user', usr=user))
-# return render_template('login.html')
-
-# return request.get('http://localhost:5001/acts').json()

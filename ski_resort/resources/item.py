@@ -24,7 +24,7 @@ class Item(Resource):
         return {'message': NOT_FOUND.format(obj=cls.__name__, name=name)}, 404
 
     @classmethod
-    def get_by_id(cls, _id: int) -> (dict):
+    def get_by_id(cls, _id: int) -> dict:
         item = cls.model.find_by_id(_id=_id)
 
         if item:
@@ -48,7 +48,7 @@ class Item(Resource):
                         'message': ERROR_DATABASE.format(err=e),
                         'error': e}, 500
 
-        return {"message": NOT_FOUND.format(obj=cls.__name__, name=name)}, 404
+        return {"message": NOT_FOUND.format(obj=cls.__name__, name=_id)}, 404
 
     @classmethod
     def post(cls, name: str) -> (dict, int):

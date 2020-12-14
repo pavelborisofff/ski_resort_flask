@@ -3,6 +3,20 @@ from ski_resort.ma import ma
 from ski_resort.models.weather import *
 
 
+class ValriskSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = ValriskModel
+        load_instance = True
+        strict = True
+
+
+class VWeatherSourceSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = WeatherSourceModel
+        load_instance = True
+        strict = True
+
+
 class WeatherSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         load_instance = True

@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import request
 from flask_restful import Resource
 
@@ -11,6 +12,95 @@ ERROR_DATABASE = 'Error database: {err}'
 ITEM_DELETED = '{obj} \'{name}\' deleted'
 BAD_DAY_FORMAT = '{obj} \'{day}\' check day'
 BAD_SOURCE_FORMAT = '{obj} \'{kind}\' check source'
+
+
+class Valrisk(Resource):
+    model = ValriskModel
+    schema = ValriskSchema()
+
+    @classmethod
+    def get_by_id(cls) -> dict:
+        valrisk = cls.model.find_by_id(_id=1)
+
+        if valrisk:
+            return {k: v for k, v in cls.schema.dump(valrisk).items() if v}
+
+        return {'message': NOT_FOUND.format(obj=cls.__name__, name=1)}
+
+    @classmethod
+    def post(cls) -> (dict, int):
+
+        valrisk_json = request.get_json()
+        valrisk = cls.schema.load(valrisk_json)
+
+        try:
+            valrisk.save_to_db()
+        except Exception as e:
+            return {'message': ERROR_DATABASE.format(err=e)}, 500
+
+        return {k: v for k, v in cls.schema.dump(valrisk).items() if v}, 201
+
+    @classmethod
+    def put(cls) -> (dict, int):
+        valrisk_json = request.get_json()
+        valrisk_loads = cls.schema.load(valrisk_json)
+
+        valrisk = cls.model.find_by_id(_id=1)
+
+        if valrisk:
+            try:
+                valrisk.update(valrisk_json)
+                return {'item': {k: v for k, v in cls.schema.dump(valrisk_loads).items() if v},
+                        'message': SUCCESSFULLY_UPDATED.format(obj=cls.__name__)}, 201
+            except Exception as e:
+                return {'item': {k: v for k, v in cls.schema.dump(valrisk_loads).items() if v},
+                        'message': ERROR_DATABASE.format(err=e),
+                        'error': e}, 500
+
+        return {"message": NOT_FOUND.format(obj=cls.__name__)}, 404
+
+
+class WeatherSource(Resource):
+    @classmethod
+    def get_by_id(cls) -> dict:
+        weather_source = cls.model.find_by_id(_id=1)
+
+        if weather_source:
+            return {k: v for k, v in cls.schema.dump(weather_source).items() if v}
+
+        return {'message': NOT_FOUND.format(obj=cls.__name__, name=1)}
+
+    @classmethod
+    def post(cls) -> (dict, int):
+
+        weather_source_json = request.get_json()
+        weather_source = cls.schema.load(weather_source_json)
+
+        try:
+            weather_source.save_to_db()
+        except Exception as e:
+            return {'message': ERROR_DATABASE.format(err=e)}, 500
+
+        return {k: v for k, v in cls.schema.dump(weather_source).items() if v}, 201
+
+    @classmethod
+    def put(cls) -> (dict, int):
+        weather_source_json = request.get_json()
+        weather_source_loads = cls.schema.load(weather_source_json)
+
+        weather_source = cls.model.find_by_id(_id=1)
+
+        if weather_source:
+            try:
+                weather_source.update(weather_source_json)
+                return {'item': {k: v for k, v in cls.schema.dump(weather_source_loads).items() if v},
+                        'message': SUCCESSFULLY_UPDATED.format(obj=cls.__name__)}, 201
+            except Exception as e:
+                return {'item': {k: v for k, v in cls.schema.dump(weather_source_loads).items() if v},
+                        'message': ERROR_DATABASE.format(err=e),
+                        'error': e}, 500
+
+        return {"message": NOT_FOUND.format(obj=cls.__name__)}, 404
 
 
 class Weather(Resource):
