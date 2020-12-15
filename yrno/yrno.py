@@ -263,7 +263,7 @@ def send_to_api(_name: str, _weather: dict[dict], _day: int,
     url = f'{api_url}:{port}{endpoint.format(kind="yrno", name=_name, day=_day)}'
 
     try:
-        _json = weather
+        _json = _weather
         _response = session.put(url, json=_json)
 
         if _response.status_code != 201:
@@ -275,50 +275,56 @@ def send_to_api(_name: str, _weather: dict[dict], _day: int,
         logger.error(f'uncaught exception: {traceback.format_exc()}')
 
 
-# Preparation to operate
-logger = init_logger('yrno.py')
-session = requests.session()
+def main():
+    # Preparation to operate
+    # logger = init_logger('yrno.py')
+    # session = requests.session()
 
-# Read list of user agents to rotate it while requesting
-with open(USER_AGENTS_LIST, encoding='utf8') as f:
-    headers_list = f.readlines()
-headers = {"User-Agent": random.choice(headers_list).strip()}
-# headers = {"User-Agent": 'for test reasons'}
+    # Read list of user agents to rotate it while requesting
+    with open(USER_AGENTS_LIST, encoding='utf8') as f:
+        headers_list = f.readlines()
+    headers = {"User-Agent": random.choice(headers_list).strip()}
+    # headers = {"User-Agent": 'for test reasons'}
 
-points_weather = {point['name']: {} for point in POINTS}
+    points_weather = {point['name']: {} for point in POINTS}
 
-for point in POINTS:
-    try:
-        params = point['coordinates']
-        response = session.get(URL, params=params, headers=headers, timeout=3)
+    for point in POINTS:
+        try:
+            params = point['coordinates']
+            response = session.get(URL, params=params, headers=headers, timeout=3)
 
-        if response and response.status_code == 200:
+            if response and response.status_code == 200:
 
-            try:
-                weather_data = response.json().get('properties', {'result': None}).get('timeseries', {'result': None})
-            except json.decoder.JSONDecodeError as e:
-                weather_data = None
-                logger.error(f'Weather data is not json: {e.args} {traceback.format_exc()}')
+                try:
+                    weather_data = response.json().get('properties', {'result': None}).get('timeseries', {'result': None})
+                except json.decoder.JSONDecodeError as e:
+                    weather_data = None
+                    logger.error(f'Weather data is not json: {e.args} {traceback.format_exc()}')
 
-            if weather_data:
-                point_weather = get_point_weather(weather_data)
-                points_weather[point['name']] = point_weather
+                if weather_data:
+                    point_weather = get_point_weather(weather_data)
+                    points_weather[point['name']] = point_weather
+                else:
+                    logger.error(f'Not weather data')
+                    logger.error(f'Not weather data: {traceback.format_exc()}')
+
             else:
-                logger.error(f'Not weather data')
-                logger.error(f'Not weather data: {traceback.format_exc()}')
+                logger.warning(f'STATUS CODE: {response.status_code} MESSAGE: {response.json() or response.text}')
 
-        else:
-            logger.warning(f'STATUS CODE: {response.status_code} MESSAGE: {response.json() or response.text}')
-
-    except Exception as e:
-        logger.error(f'{point["name"]}')
-        logger.error(f'uncaught exception: {traceback.format_exc()}')
+        except Exception as e:
+            logger.error(f'{point["name"]}')
+            logger.error(f'uncaught exception: {traceback.format_exc()}')
 
 
-for name, data in points_weather.items():
-    for day, weather in data.items():
-        result = send_to_api(name, data, day, API_URL, API_PORT, ENDPOINT)
+    for name, data in points_weather.items():
+        for day, weather in data.items():
+            result = send_to_api(name, data, day, API_URL, API_PORT, ENDPOINT)
 
-        if result:
-            logger.info(f'{name} {day} {weather}')
+            if result:
+                logger.info(f'{name} {day} {weather}')
 
+if __name__ == '__main__':
+    # Preparation to operate
+    logger = init_logger('yrno.py')
+    session = requests.session()
+    main()
