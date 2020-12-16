@@ -84,7 +84,7 @@
         <AREA nom="Трассы" nom_en="SLOPES">
             {% for slope in values.slopes %}
             <TRAIL name="{{ slope.name }}" name_en="{{ slope.name_en }}" state="{{ slope.state }}" type="{{ slope.type }}" level="{{ slope.level }}" msg=""
-                   maintenance_txt="" maintenance_num="0"/>
+                   maintenance_txt="" maintenance_num="0" night="{{ slope.night }}" night_open_from="{{ slope.night_open_from }}" night_open_till="{{ slope.night_open_till }}" />
             {% endfor %}
         </AREA>
         <AREA nom="ЮЖНЫЙ СКЛОН" nom_en="SOUTH SLOPE">
