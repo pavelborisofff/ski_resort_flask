@@ -158,6 +158,13 @@ body {
     color: var(--main-text);
 }
 
+.error {
+    background-color: #e0a800;
+    margin: 0 auto;
+    padding: 5px 0 5px;
+    text-align: center;
+}
+
 .main__button {
     background-color: #AC1E2A;
     padding: 5px 10px;

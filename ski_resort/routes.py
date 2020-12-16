@@ -14,6 +14,7 @@ from .resources.weather import Weather, WeatherDay
 
 
 def post_items(_request: request, obj: Item, name: str) -> None:
+    [print(k, v, type(v)) for k, v in _request.form.items() if k.endswith('__night')]
     for field, value in _request.form.items():
         _id, key = field.split('__')
 
@@ -22,6 +23,8 @@ def post_items(_request: request, obj: Item, name: str) -> None:
             if value and value != item[key]:
                 data = {key: value, 'updated_by': name}
                 response = obj.update(_id, data)
+                # if response[-1] != 201:
+                #     logger.error(f'Failed post items {response}')
 
 
 def get_items(objs: Items, key: str):
@@ -105,7 +108,8 @@ def main(app):
     @login_required
     def page_slopes():
         if request.method == 'POST':
-            post_items(request, Slope, current_user.name or 'anon')
+            post_items(request, Slope, current_user.name)
+
             return redirect(url_for('page_slopes'))
 
         list_items = get_items(Slopes, 'slopes')

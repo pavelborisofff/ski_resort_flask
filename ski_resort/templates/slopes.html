@@ -7,95 +7,194 @@
 {% block title %} Трассы {% endblock %}
 
 {% block content %}
-    {% set active_page = 'slopes' %}
-    {% include 'header.html' %}
-    <main class="main">
-        <div class="main__container container">
-            <!-- SLOPES HEADING -->
-            <div class="main__header flex">
-                <h1 class="main__heading">Трассы</h1>
-                <!-- BUTTONS -->
-                <form id="slopes" action="" method="POST" class="main__buttons">
-                    <button class="main__button button reset-btn" type="reset" value="Отменить">Отменить</button>
-                    <button class="main__button button reset-btn" type="submit" value="Сохранить">Сохранить</button>
-                </form>
-            </div>
-            <!-- SLOPES TABLE -->
-            <div class="main__table table flex">
-                <div class="table__header flex">
-                    <div class="table__cell name">Название</div>
-                    <div class="table__cell kind">Сложность</div>
-                    <div class="table__cell hours">Время работы</div>
-                    <div class="table__cell state">Состояние</div>
-                    <div class="table__cell change">Последнее изменение</div>
-                </div>
-                <!-- SLOPES GENERATED  -->
-                {% for slope in list_slopes %}
-                <!--  {{ slope.get('name') }}  -->
-                <div class="table__row flex">
-                    <!-- NAME  -->
-                    <div class="table__cell name">{{ slope.get('name') }}</div>
-                    <!-- LEVEL  -->
-                    <div class="table__cell kind">
-                        {% set levels = ['G', 'B', 'R', 'D'] %}
-                        {% set check = slope.get('level') %}
-                        {% for level in levels %}
-                        <!-- {{ level }}  -->
-                        <label>
-                            <input type="radio"
-                                   name="{{ slope.get('id') }}__level"
-                                   id="{{ slope.get('id') }}__level__{{ level }}"
-                                   form="slopes"
-                                   class="level__radio"
-                                   value="{{ level }}"
-                                   {% if check == level %}checked{% endif %}>
-                            <div class="complex complex__{{ level }}"></div>
-                        </label>
-                        {% endfor %}
-                    </div>
-                    <!-- HOURS  -->
-                    <div class="table__cell hours">
-                        <input type="text"
-                               name="{{ slope.get('id') }}__open_from"
-                               id="{{ slope.get('id') }}__open_from"
-                               placeholder="{{ slope.get('open_from') }}"
-                               class="time"
-                               form="slopes"
-                               max="5"> —
-                        <input type="text"
-                               name="{{ slope.get('id') }}__open_till"
-                               id="{{ slope.get('id') }}__open_till"
-                               placeholder="{{ slope.get('open_till') }}"
-                               class="time"
-                               form="slopes"
-                               max="5">
-                    </div>
-                    <!-- STATE  -->
-                    <div class="table__cell state">
-                        {% set states = ['O', 'P', 'C', 'OO'] %}
-                        {% set check = slope.get('state') %}
-                        {% for state in states %}
-                        <!-- {{ state }}  -->
-                        <label>
-                            <input type="radio"
-                                   name="{{ slope.get('id') }}__state"
-                                   id="{{ slope.get('id') }}__state__{{ state }}"
-                                   form="slopes"
-                                   class="state__radio"
-                                   value="{{ state }}"
-                                   {% if check == state %}checked{% endif %}>
-                            <img src="{{ url_for('static', filename='img/states_icons/' + state + '.svg') }}" alt="" class="state__img state__open">
-                        </label>
-                        {% endfor %}
-                    </div>
-                    <!-- UPDATED  -->
-                    <div class="table__cell change">{{ slope.get('updated')|truncate(16, True, end='')|replace('-', '.')}} {{ slope.get('updated_by') }}</div>
-                </div>
+{% set active_page = 'slopes' %}
+{% include 'header.html' %}
 
-                {% endfor %}
-                <!-- SLOPES GENERATED END  -->
-            </div>
-            <!-- SLOPES TABLE END -->
+<main class="main">
+    <div class="main__container container">
+        <!-- SLOPES HEADING -->
+        <div class="main__header flex">
+            <h1 class="main__heading">Трассы</h1>
+            <!-- BUTTONS -->
+            <form id="slopes" action="" method="POST" class="main__buttons">
+                <button class="main__button button reset-btn" type="reset" value="Отменить">Отменить</button>
+                <button class="main__button button reset-btn" type="submit" value="Сохранить">Сохранить</button>
+            </form>
         </div>
-    </main>
+        <!-- SLOPES TABLE -->
+        <div class="main__table table flex">
+            <div class="table__header flex">
+                <div class="table__cell kind"></div>
+                <div class="table__cell name">Название</div>
+                <div class="table__cell length">Длина</div>
+                <div class="table__cell hours">Время работы</div>
+                <div class="table__cell hours">Ночное катание</div>
+                <div class="table__cell state">Состояние</div>
+                <div class="table__cell change">Последнее изменение</div>
+            </div>
+            <!-- SLOPES GENERATED  -->
+            {% for slope in list_slopes %}
+            <!--  {{ slope.get('name') }}  -->
+            <div class="table__row flex">
+                <!-- LEVEL  -->
+                <div class="table__cell kind">
+                    {% set levels = ['G', 'B', 'R', 'D'] %}
+                    {% set check = slope.get('level') %}
+                    {% for level in levels %}
+                    <!-- {{ level }}  -->
+                    {% if check == level %}
+                    <label>
+                        <div class="complex complex__{{ level }}"></div>
+                    </label>
+                    {% endif %}
+                    <!--                        <label>-->
+                    <!--                            <input type="radio"-->
+                    <!--                                   name="{{ slope.get('id') }}__level"-->
+                    <!--                                   id="{{ slope.get('id') }}__level__{{ level }}"-->
+                    <!--                                   form="slopes"-->
+                    <!--                                   class="level__radio"-->
+                    <!--                                   value="{{ level }}"-->
+                    <!--                                   {% if check == level %}checked{% endif %}>-->
+                    <!--                            <div class="complex complex__{{ level }}"></div>-->
+                    <!--                        </label>-->
+                    {% endfor %}
+                </div>
+                <!-- NAME  -->
+                <div class="table__cell name"><span>{{ slope.get('name') }}</span></div>
+                <!-- LENGTH  -->
+                <div class="table__cell length"><span>&#x2190; {{ slope.length }} м</span></div>
+                <!-- HOURS  -->
+                <div class="table__cell hours">
+                    <input type="text"
+                           name="{{ slope.get('id') }}__open_from"
+                           id="{{ slope.get('id') }}__open_from"
+                           placeholder="{{ slope.get('open_from') }}"
+                           class="time"
+                           form="slopes"
+                           max="5">
+                    <input type="text"
+                           name="{{ slope.get('id') }}__open_till"
+                           id="{{ slope.get('id') }}__open_till"
+                           placeholder="{{ slope.get('open_till') }}"
+                           class="time"
+                           form="slopes"
+                           max="5">
+                </div>
+                <!-- HOURS HIGHT -->
+                <div class="table__cell hours">
+                    <input type="checkbox"
+                           class="night"
+                           onclick="switch_night(this.checked, '{{ slope.id }}__night', '{{ slope.id }}__night_open_from', '{{ slope.id }}__night_open_till')"
+                           {% if slope.night == "on" %}checked{% endif %}>
+                    <input type="text"
+                           name="{{ slope.get('id') }}__night"
+                           id="{{ slope.get('id') }}__night"
+                           form="slopes"
+                           value="{{ slope.night }}"
+                           class="visually-hidden">
+                    <input type="text"
+                           name="{{ slope.get('id') }}__night_open_from"
+                           id="{{ slope.get('id') }}__night_open_from"
+                           placeholder="{{ slope.night_open_from }}"
+                           class="time"
+                           form="slopes"
+                           max="5"
+                           {% if slope.night == "off" %}disabled{% endif %}>
+                    <input type="text"
+                           name="{{ slope.get('id') }}__night_open_till"
+                           id="{{ slope.get('id') }}__night_open_till"
+                           placeholder="{{ slope.night_open_till }}"
+                           class="time"
+                           form="slopes"
+                           max="5"
+                           {% if slope.night == "off" %}disabled{% endif %}>
+                </div>
+                <!-- STATE  -->
+                <div class="table__cell state">
+                    {% set states = ['O', 'P', 'C', 'OO'] %}
+                    {% set check = slope.get('state') %}
+                    {% for state in states %}
+                    <!-- {{ state }}  -->
+                    <label>
+                        <input type="radio"
+                               name="{{ slope.get('id') }}__state"
+                               id="{{ slope.get('id') }}__state__{{ state }}"
+                               form="slopes"
+                               class="state__radio"
+                               value="{{ state }}"
+                               {% if check== state %}checked{% endif %}>
+                        <img src="{{ url_for('static', filename='img/states_icons/' + state + '.svg') }}" alt=""
+                             class="state__img state__open">
+                    </label>
+                    {% endfor %}
+                </div>
+                <!-- UPDATED  -->
+                <div class="table__cell change">{{ slope.get('updated')|truncate(16, True, end='')|replace('-', '.')}}
+                    {{ slope.get('updated_by') }}
+                </div>
+            </div>
+
+            {% endfor %}
+            <!-- SLOPES GENERATED END  -->
+        </div>
+        <!-- SLOPES TABLE END -->
+    </div>
+</main>
+<script>
+    function switch_night(f, night, from, till) {
+
+        var x = document.getElementById(night)
+
+        if (x.value === 'on') {
+            x.value = 'off'
+        } else {
+            x.value = 'on'
+        }
+        document.getElementById(from).disabled = !f;
+        document.getElementById(till).disabled = !f;
+    }
+
+
+
+</script>
 {% endblock %}
+<!--    // function switch_night() {-->
+<!--    //     if (document.getElementsByClassName('night').checked) {-->
+<!--    //         document.getElementsByClassName('night').value = 'on';-->
+<!--    //     } else {-->
+<!--    //         document.getElementsByClassName('night').value = 'no_night';-->
+<!--    //     }-->
+<!--    // }-->
+
+<!--    // function enableDisable(bEnable, textBoxID1, textBoxID2)-->
+<!--    // {-->
+<!--    //     document.getElementById(textBoxID1).disabled = !bEnable-->
+<!--    //     document.getElementById(textBoxID1).value = '&#45;&#45;&#45;&#45;'-->
+<!--    //     document.getElementById(textBoxID2).disabled = !bEnable-->
+<!--    //     document.getElementById(textBoxID2).value = '&#45;&#45;&#45;&#45;'-->
+<!--    // }-->
+
+<!--// if (f.checked) {-->
+<!--//     document.getElementById(night).value = 'on';-->
+<!--// } else {-->
+<!--//     document.getElementById(night).value = 'off';-->
+<!--// }-->
+
+<!--// let switch_night = document.querySelector(".night");-->
+<!--//-->
+<!--// buttonNewPost.addEventListener('click', event => {-->
+<!--//     event.preventDefault();-->
+<!--//     showAddPost();-->
+<!--// });-->
+
+<!--// function swith_night(f) {-->
+<!--//  if (f.checked) {-->
+<!--//     for (var i = 0; i < dsb.length; i++) {-->
+<!--//             dsb[i].disabled = true-->
+<!--//         };-->
+<!--//     // document.getElementById("snow__depth").disabled = true;-->
+<!--// }  else {-->
+<!--//     for (var i = 0; i < dsb.length; i++) {-->
+<!--//             dsb[i].disabled = false-->
+<!--//         };-->
+<!--// //  document.getElementById("snow__depth").disabled = false;-->

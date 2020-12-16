@@ -136,15 +136,23 @@
     margin: 4px;
 }
 
+.kind {
+    width: 32px;
+    margin-left: 5px;
+    position: relative;
+}
+
 .name {
     width: 30%;
     margin-left: 5px;
 }
 
-.kind {
-    width: 15%;
-    margin-left: 5px;
-    position: relative;
+.length {
+    width: 66px;
+}
+
+.length > span {
+    font-size: 0.8em;
 }
 
 .select {
@@ -186,6 +194,14 @@
 
 .time:focus {
     border: 1px solid var(--grey_dd);
+}
+
+.time:disabled {
+    background-color: #E8DC4D;
+}
+
+input[type=checkbox].night {
+    display: inline-block;
 }
 
 .state {
@@ -237,23 +253,31 @@ input[type=checkbox] {
 .complex {
     border-radius: 12px;
     display: inline-block;
+    cursor: default;
 }
 
 .complex__G {
     background-color: #8FC14F;
+    opacity: 1;
 }
 
 .complex__B {
     background-color: blue;
+    opacity: 1;
 }
 
 .complex__R {
     background-color: #B1101F;
+    opacity: 1;
 }
 
 .complex__D {
     background-color: var(--main-text);
+    opacity: 1;
 }
-ascascasc
-datavs
-vzvx
+
+checkBox,
+#textBox {
+    display: inline-block;
+}
+

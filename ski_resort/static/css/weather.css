@@ -24,9 +24,17 @@ label * {
     min-width: 290px;
     background-color: white;
     font-size: 1.2em;
-    box-shadow: 0px 3px 17px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 3px 17px rgba(0, 0, 0, 0.07);
     border-radius: 3px;
     margin-right: 20px;
+}
+
+.menu__item:not(:first-child) {
+    border-top: 1px solid var(--grey_dd);
+}
+
+.menu__item:nth-child(2n) {
+    background-color: var(--grey_fa);
 }
 
 .menu__item.active{
@@ -41,10 +49,19 @@ label * {
     padding: 15px 0;
 }
 
-.menu__item:hover,
-.menu__item:active {
+.menu__item:not(:first-child):hover,
+.menu__item:not(:first-child):active {
     background-color: var(--blue);
+    border-top: 1px solid var(--blue);
 }
+
+
+.menu__item:first-child:hover,
+.menu__item:first-child:active {
+    background-color: var(--blue);
+    border-top: none;
+}
+
 
 .active .menu__link,
 .menu__item:hover .menu__link,
@@ -166,4 +183,7 @@ select:disabled {
     border-bottom: 2px solid var(--blue);
 }
 
+.block__label:hover {
+    background-color: #E8E8E8;
+}
 

@@ -9,7 +9,13 @@ class BaseModel(db.Model):
 
     def save_to_db(self):
         db.session.add(self)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise
+        finally:
+            db.session.close()
 
     def update(self, loads: dict):
         for key, value in loads.items():
@@ -19,7 +25,13 @@ class BaseModel(db.Model):
 
     def delete_from_db(self):
         db.session.delete(self)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise
+        finally:
+            db.session.close()
 
     @classmethod
     def find_by_name(cls, name: str) -> 'BaseModel':

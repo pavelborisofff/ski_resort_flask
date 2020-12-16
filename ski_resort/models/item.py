@@ -68,10 +68,12 @@ class ActModel(ItemModel):
 class SlopeModel(ItemModel):
     __tablename__ = 'slopes'
 
+    night_open_from = db.Column(db.String(5), default='19:00')
+    night_open_till = db.Column(db.String(5), default='22:45')
     level = db.Column(db.String(10), default='green')
     length = db.Column(db.Integer)
     height = db.Column(db.Integer)
-    night = db.Column(db.Boolean, default=False)
+    night = db.Column(db.String(10), default='0')
     south = db.Column(db.Boolean, default=False)
 
     def __repr__(self):

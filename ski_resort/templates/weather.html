@@ -32,7 +32,7 @@
                     </ul>
                     <!-- YRNO -->
                     <label class="weather__yrno">
-                        <input type="checkbox" name="yrno_checkbox" id="yrno" value="1"  onclick="yrno(this)" checked>
+                        <input type="checkbox" name="yrno_checkbox" id="yrno" value="1" onclick="yrno(this)" checked>
                         <span>Погода с yr.no</span>
                     </label>
                     <!-- BUTTONS -->
@@ -145,7 +145,7 @@
         </div>
     </main>
     <script>
-        var dsb = document.querySelectorAll(".dsb");
+        let dsb = document.querySelectorAll(".dsb");
 
         function yrno(f) {
          if (f.checked) {
