@@ -153,7 +153,7 @@ def compare_hours(utc_time: str) -> bool:
         local = datetime.datetime.now()
         return (local.hour - to_local.hour) in (0, 1)
     except ValueError as e:
-        logger.error(f'{utc_time} {e.args} {traceback.format_exc()}')
+        logger.error(utc_time, e.args, traceback.format_exc())
         return True  # Because yr.no send current point_weather in first index
 
 
@@ -260,19 +260,22 @@ def send_to_api(_name: str, _weather: dict[dict], _day: int,
     :return: True in case completed update info via API
     """
 
-    url = f'{api_url}:{port}{endpoint.format(kind="yrno", name=_name, day=_day)}'
+    # url = f'{api_url}:{port}{endpoint.format(kind="yrno", name=_name, day=_day)}'
+    url = '{}:{}{}'.format(api_url, port, endpoint.format(kind="yrno", name=_name, day=_day))
 
     try:
         _json = _weather
         _response = session.put(url, json=_json)
 
         if _response.status_code != 201:
-            logger.error(f'{_name} error: {_response.status_code} - {_response.json()} {traceback.format_exc()}')
+            # logger.error(f'{_name} error: {_response.status_code} - {_response.json()} {traceback.format_exc()}')
+            logger.error(
+                '{} error: {} - {} {}'.format(_name, _response.status_code, _response.json(), traceback.format_exc()))
         else:
             return True
 
     except:
-        logger.error(f'uncaught exception: {traceback.format_exc()}')
+        logger.error('uncaught exception: {}'.format(traceback.format_exc()))
 
 
 def main():
@@ -296,32 +299,34 @@ def main():
             if response and response.status_code == 200:
 
                 try:
-                    weather_data = response.json().get('properties', {'result': None}).get('timeseries', {'result': None})
+                    weather_data = response.json().get('properties', {'result': None}).get('timeseries',
+                                                                                           {'result': None})
                 except json.decoder.JSONDecodeError as e:
                     weather_data = None
-                    logger.error(f'Weather data is not json: {e.args} {traceback.format_exc()}')
+                    logger.error('Weather data is not json: {} {}'.format(e.args, traceback.format_exc()))
 
                 if weather_data:
                     point_weather = get_point_weather(weather_data)
                     points_weather[point['name']] = point_weather
                 else:
-                    logger.error(f'Not weather data')
-                    logger.error(f'Not weather data: {traceback.format_exc()}')
+                    logger.error('Not weather data')
+                    logger.error('Not weather data: {}'.format(traceback.format_exc()))
 
             else:
-                logger.warning(f'STATUS CODE: {response.status_code} MESSAGE: {response.json() or response.text}')
+                logger.warning(
+                    'STATUS CODE: {} MESSAGE: {}'.format(response.status_code, response.json() or response.text))
 
         except Exception as e:
-            logger.error(f'{point["name"]}')
-            logger.error(f'uncaught exception: {traceback.format_exc()}')
-
+            logger.error(point["name"])
+            logger.error('uncaught exception: {}'.format(traceback.format_exc()))
 
     for name, data in points_weather.items():
         for day, weather in data.items():
             result = send_to_api(name, data, day, API_URL, API_PORT, ENDPOINT)
 
             if result:
-                logger.info(f'{name} {day} {weather}')
+                logger.info(name, day, weather)
+
 
 if __name__ == '__main__':
     # Preparation to operate
