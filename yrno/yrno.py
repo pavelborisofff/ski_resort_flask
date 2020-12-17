@@ -6,7 +6,7 @@ import traceback
 
 from typing import Union
 
-from .tech import init_logger
+from tech import init_logger
 
 # SETTINGS
 TZ = 3  # Difference between local and UTC time, hours
