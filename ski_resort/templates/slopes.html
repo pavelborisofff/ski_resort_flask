@@ -27,8 +27,16 @@
                 <div class="table__cell kind"></div>
                 <div class="table__cell name">Название</div>
                 <div class="table__cell length">Длина</div>
-                <div class="table__cell hours">Время работы</div>
-                <div class="table__cell hours">Ночное катание</div>
+                <div class="table__cell hours">
+                    <input type="checkbox" id="hours__locker" class="locker" onclick="switch_disable(this.checked, 'open-hours')" checked>
+                    <label for="hours__locker" class="locker__icon"></label>
+                    <div>Время работы</div>
+                </div>
+                <div class="table__cell hours">
+                    <input type="checkbox" id="night__locker" class="locker" onclick="switch_disable_plus(this.checked, 'night-input', 'red')" checked>
+                    <label for="night__locker" class="locker__icon"></label>
+                    <div>Вечернее катание</div>
+                </div>
                 <div class="table__cell state">Состояние</div>
                 <div class="table__cell change">Последнее изменение</div>
             </div>
@@ -69,45 +77,49 @@
                            name="{{ slope.get('id') }}__open_from"
                            id="{{ slope.get('id') }}__open_from"
                            placeholder="{{ slope.get('open_from') }}"
-                           class="time"
+                           class="time open-hours"
                            form="slopes"
-                           max="5">
+                           max="5"
+                           disabled>
                     <input type="text"
                            name="{{ slope.get('id') }}__open_till"
                            id="{{ slope.get('id') }}__open_till"
                            placeholder="{{ slope.get('open_till') }}"
-                           class="time"
+                           class="time open-hours"
                            form="slopes"
-                           max="5">
+                           max="5"
+                           disabled>
                 </div>
                 <!-- HOURS HIGHT -->
                 <div class="table__cell hours flex">
                     <input type="checkbox"
-                           class="night"
+                           class="night night-input"
                            onclick="switch_night(this.checked, '{{ slope.id }}__night', '{{ slope.id }}__night_open_from', '{{ slope.id }}__night_open_till')"
-                           {% if slope.night == "on" %}checked{% endif %}>
+                           {% if slope.night == "on" %}checked{% endif %}
+                           disabled>
                     <input type="text"
                            name="{{ slope.get('id') }}__night"
                            id="{{ slope.get('id') }}__night"
                            form="slopes"
                            value="{{ slope.night }}"
-                           class="visually-hidden">
+                           class="visually-hidden night-input"
+                           disabled>
                     <input type="text"
                            name="{{ slope.get('id') }}__night_open_from"
                            id="{{ slope.get('id') }}__night_open_from"
                            placeholder="{{ slope.night_open_from }}"
-                           class="time"
+                           class="time {% if slope.night == "on" %}red{% endif %}"
                            form="slopes"
                            max="5"
-                           {% if slope.night == "off" %}disabled{% endif %}>
+                           disabled>
                     <input type="text"
                            name="{{ slope.get('id') }}__night_open_till"
                            id="{{ slope.get('id') }}__night_open_till"
                            placeholder="{{ slope.night_open_till }}"
-                           class="time"
+                           class="time {% if slope.night == "on" %}red{% endif %}"
                            form="slopes"
                            max="5"
-                           {% if slope.night == "off" %}disabled{% endif %}>
+                           disabled>
                 </div>
                 <!-- STATE  -->
                 <div class="table__cell state">
@@ -141,20 +153,61 @@
     </div>
 </main>
 <script>
-    function switch_night(f, night, from, till) {
 
-        var x = document.getElementById(night)
-
-        if (x.value === 'on') {
-            x.value = 'off'
-        } else {
-            x.value = 'on'
+    function switch_disable(check, elements) {
+        let inputs = document.getElementsByClassName(elements);
+        for(let i=0; i < inputs.length; i++) {
+            inputs[i].disabled = check;
         }
-        document.getElementById(from).disabled = !f;
-        document.getElementById(till).disabled = !f;
+    }
+
+    function switch_disable_plus(check, classOne, classTwo) {
+        console.log(check)
+        let inputs = document.getElementsByClassName(classOne);
+        let times = document.getElementsByClassName(classTwo);
+
+        for(let i=0; i < inputs.length; i++) {
+            inputs[i].disabled = check;
+        }
+
+        console.log(times)
+        console.log(times.length)
+        for(let i=0; i < times.length; i++) {
+            if (check) {
+                times[i].disabled = check;
+            } else {
+                times[i].disabled = check;
+            }
+
+        }
     }
 
 
+    function switch_night(f, _night, from, till) {
+
+        let nF = document.getElementById(from)
+        let nT = document.getElementById(till)
+
+        var x = document.getElementById(_night)
+        console.log(x.value)
+
+        if (x.value === 'on') {
+
+            x.value = 'off';
+            nF.classList.remove('red');
+            nT.classList.remove('red');
+        } else {
+            x.value = 'on';
+            nF.classList.add('red');
+            nT.classList.add('red');
+
+        }
+
+        nF.disabled = !f;
+        nT.disabled = !f;
+
+        console.log(x.value)
+    }
 
 </script>
 {% endblock %}

@@ -26,18 +26,29 @@
                 <div class="table__header flex">
                     <div class="table__cell icon"></div>
                     <div class="table__cell name">Название</div>
-                    <div class="table__cell open">Открытие</div>
+                    <div class="table__cell open">
+                        <input type="checkbox" id="from__locker" class="locker" onclick="switch_disable(this.checked, 'open-from')" checked>
+                        <label for="from__locker" class="locker__icon"></label>
+                        <div>Открытие</div>
+                    </div>
+
                     <div class="table__cell close">
-                        <span>Посадка до:</span><br>
-                        <div class="closed-desc flex"><small>наверх</small>&nbsp;&nbsp;&nbsp;<small>вниз</small></div>
+                        <input type="checkbox" id="till__locker" class="locker" onclick="switch_disable(this.checked, 'open-till')" checked>
+                        <label for="till__locker" class="locker__icon"></label>
+                        <div>Посадка до:</div>
+<!--                        <div class="closed-desc flex"><small>наверх</small>&nbsp;&nbsp;&nbsp;<small>вниз</small></div>-->
                     </div>
                     <!-- <div class="table__cell hours">Время работы</div> -->
-                    <div class="table__cell night">Ночное катание</div>
+                    <div class="table__cell night">
+                        <input type="checkbox" id="night__locker" class="locker" onclick="switch_disable_plus(this.checked, 'night-input', 'red')" checked>
+                        <label for="night__locker" class="locker__icon"></label>
+                        <div>Вечернее катание</div>
+                    </div>
                     <div class="table__cell state">Состояние</div>
-                    <div class="table__cell flex">
-                        <input type="checkbox" id="lifts__locker" class="locker" onclick="switch_disable(this.checked, 'winter-check')" checked>
-                        <label for="lifts__locker" class="locker__icon"></label>
-                        <span>Лето</span>
+                    <div class="table__cell winter">
+                        <input type="checkbox" id="summer__locker" class="locker" onclick="switch_disable(this.checked, 'winter-check')" checked>
+                        <label for="summer__locker" class="locker__icon"></label>
+                        <div>Лето</div>
                     </div>
                     <div class="table__cell change">Последнее изменение</div>
                 </div>
@@ -56,9 +67,10 @@
                                name="{{ lift.get('id') }}__open_from"
                                id="{{ lift.get('id') }}__open_from"
                                placeholder="{{ lift.get('open_from') }}"
-                               class="time"
+                               class="time open-from"
                                form="lifts"
-                               max="5">
+                               max="5"
+                               disabled>
                     </div>
                     <!-- OPEN TILL  -->
                     <div class="table__cell close flex">
@@ -66,40 +78,43 @@
                                name="{{ lift.get('id') }}__open_till"
                                id="{{ lift.get('id') }}__open_till"
                                placeholder="{{ lift.get('open_till') }}"
-                               class="time"
+                               class="time open-till"
                                form="lifts"
-                               max="5">
+                               max="5"
+                               disabled>
                     </div>
                     <!-- NIGHT  -->
                     <div class="table__cell night flex">
                         <input type="checkbox"
-                               class="night"
+                               class="night night-input"
                                onclick="switch_night(this.checked, '{{ lift.id }}__night', '{{ lift.id }}__night_open_from', '{{ lift.id }}__night_open_till')"
-                               {% if lift.night == "on" %}checked{% endif %}>
+                               {% if lift.night == "on" %}checked{% endif %}
+                               disabled>
                         <input type="text"
-                               name="{{ lift.get('id') }}__night"
-                               id="{{ lift.get('id') }}__night"
+                               name="{{ lift.id }}__night"
+                               id="{{ lift.id }}__night"
                                form="lifts"
                                value="{{ lift.night }}"
-                               class="visually-hidden">
+                               class="visually-hidden night-input"
+                               disabled>
                         <!-- NIGHT OPEN FROM  -->
                         <input type="text"
                                name="{{ lift.get('id') }}__night_open_from"
                                id="{{ lift.get('id') }}__night_open_from"
                                placeholder="{{ lift.get('night_open_from') }}"
-                               class="time"
+                               class="time night-time {% if lift.night == "on" %}red{% endif %}"
                                form="lifts"
-                               max="5"
-                               {% if lift.night == "off" %}disabled{% endif %}>
+                               max="5" disabled>
+<!--                               {% if lift.night == "off" %}disabled{% endif %}>-->
                         <!-- NIGHT OPEN TILL  -->
                         <input type="text"
                                name="{{ lift.get('id') }}__night_open_till"
                                id="{{ lift.get('id') }}__night_open_till"
                                placeholder="{{ lift.get('open_till') }}"
-                               class="time"
+                               class="time night-time {% if lift.night == "on" %}red{% endif %}"
                                form="lifts"
-                               max="5"
-                               {% if lift.night == "off" %}disabled{% endif %}>
+                               max="5" disabled>
+<!--                               {% if lift.night == "off" %}disabled{% endif %}>-->
                     </div>
                     <!-- STATE  -->
                     <div class="table__cell state">
@@ -132,6 +147,7 @@
         </div>
     </main>
     <script>
+
     function switch_disable(check, elements) {
         let inputs = document.getElementsByClassName(elements);
         for(let i=0; i < inputs.length; i++) {
@@ -139,18 +155,52 @@
         }
     }
 
-    function switch_night(f, night, from, till) {
+    function switch_disable_plus(check, classOne, classTwo) {
+        console.log(check)
+        let inputs = document.getElementsByClassName(classOne);
+        let times = document.getElementsByClassName(classTwo);
 
-        var x = document.getElementById(night)
-
-        if (x.value === 'on') {
-            x.value = 'off'
-        } else {
-            x.value = 'on'
+        for(let i=0; i < inputs.length; i++) {
+            inputs[i].disabled = check;
         }
 
-        document.getElementById(from).disabled = !f;
-        document.getElementById(till).disabled = !f;
+        console.log(times)
+        console.log(times.length)
+        for(let i=0; i < times.length; i++) {
+            if (check) {
+                times[i].disabled = check;
+            } else {
+                times[i].disabled = check;
+            }
+
+        }
+    }
+
+
+    function switch_night(f, _night, from, till) {
+
+        let nF = document.getElementById(from)
+        let nT = document.getElementById(till)
+
+        var x = document.getElementById(_night)
+        console.log(x.value)
+
+        if (x.value === 'on') {
+
+            x.value = 'off';
+            nF.classList.remove('red');
+            nT.classList.remove('red');
+        } else {
+            x.value = 'on';
+            nF.classList.add('red');
+            nT.classList.add('red');
+
+        }
+
+        nF.disabled = !f;
+        nT.disabled = !f;
+
+        console.log(x.value)
     }
 
     </script>
