@@ -10,10 +10,11 @@ from pprint import pprint
 from .my_forms import LoginForm
 from .models.user import UserModel
 from .resources.item import Item, Items, Slope, Slopes, Lift, Lifts
-from .resources.weather import Weather, WeatherDay
+from .resources.weather import Weather, WeatherDay, Valrisk
 
 
 def post_items(_request: request, obj: Item, name: str) -> None:
+    print(_request)
     [print(k, v, type(v)) for k, v in _request.form.items() if k.endswith('__night')]
     for field, value in _request.form.items():
         _id, key = field.split('__')
@@ -22,9 +23,7 @@ def post_items(_request: request, obj: Item, name: str) -> None:
             item = obj.get_by_id(int(_id))
             if value and value != item[key]:
                 data = {key: value, 'updated_by': name}
-                response = obj.update(_id, data)
-                # if response[-1] != 201:
-                #     logger.error(f'Failed post items {response}')
+                obj.update(_id, data)
 
 
 def get_items(objs: Items, key: str):
@@ -41,6 +40,18 @@ def main(app):
     login_manager = LoginManager()
     login_manager.login_view = 'login'
     login_manager.init_app(app)
+
+    @app.after_request
+    def add_header(r):
+        """
+        Add headers to both force latest IE rendering engine or Chrome Frame,
+        and also to cache the rendered page for 10 minutes.
+        """
+        r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        r.headers["Pragma"] = "no-cache"
+        r.headers["Expires"] = "0"
+        r.headers['Cache-Control'] = 'public, max-age=0'
+        return r
 
     @login_manager.user_loader
     def load_user(_id):
@@ -62,18 +73,41 @@ def main(app):
     @app.route('/<string:kind>/<string:name>/<int:day>',  methods=['POST', 'GET'])
     @login_required
     def page_weather(kind, name, day):
-        weather_local = Weather.get(kind, name, day)[0]
+        valrisk = Valrisk.get()[0].get('value')
+        weather = Weather.get(kind, name, day)[0]
+
+        dates = [datetime.datetime.strftime(datetime.datetime.now().date() + datetime.timedelta(days=i), '%d.%m.%Y')
+                 for i in range(4)]
+
+        if kind == 'local':
+            snow = weather.copy()
+        else:
+            snow = Weather.get('local', name, day)[0]
 
         if request.method == 'POST':
 
-            for field, value in request.form.items():
-                value = value if (set(value) - set('1234567890')) else int(value)
-                if value != weather_local.get(field):
-                    data = {field: value, 'updated_by': current_user.name}
-                    response = Weather.update(kind, name, day, data=data)
-            return redirect(url_for('page_weather', kind=kind, name=name, day=day))
+            if kind == 'yrno':
+                weather = snow.copy()
 
-        return render_template('weather.html', name=name, weather=weather_local)
+            for field, value in request.form.items():
+
+                if value:
+                    value = value if (set(value) - set('1234567890')) else int(value)
+                else:
+                    value = '-'
+
+                if value != weather.get(field):
+                    data = {field: value, 'updated_by': current_user.name}
+                    Weather.update('local', name, day, data=data)
+
+                    if field == 'snow_avalanche':
+                        data = {'value': value}
+                        Valrisk.update(data)
+
+            return redirect(url_for('page_weather', kind='local', name=name, day=day))
+
+        return render_template('weather.html', name=name, weather=weather, snow=snow, day=day, kind=kind,
+                               valrisk=valrisk, dates=dates)
 
     @app.route('/login', methods=['POST', 'GET'])
     def login():
@@ -130,14 +164,14 @@ def main(app):
     @app.route('/russia-russia-local.xml')
     @app.route('/xml')
     def xml():
-        weather = [WeatherDay.get('yrno', i)[0]['weatherday'] for i in range(4)]
+        weather = [WeatherDay.get('local', i)[0]['weatherday'] for i in range(4)]
 
         dates = []
         for i in range(4):
             today = datetime.datetime.now() + datetime.timedelta(days=i)
             dates.append(datetime.datetime.strftime(today, '%d/%m/%Y %H:%M'))
 
-        valrisk = ['']
+        valrisk = Valrisk.get()[0].get('value')
 
         lifts = get_items(Lifts, 'lifts')
 

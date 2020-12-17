@@ -127,15 +127,48 @@ label * {
     align-items: stretch;
     min-width: 300px;
     width: 45%;
-    margin-top: 20px;
 }
 
 .block__heading {
     color: white;
     background-color: var(--blue);
     padding: 5px 20px;
-    font-weight: 400;
     text-transform: uppercase;
+}
+
+
+#weather__locker,
+#snow__locker {
+    display: none;
+}
+
+
+snow-input::placeholder {
+    color: var(--main-text);
+}
+
+.block__button {
+    margin-right: 16px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: var(--main-text);
+    background-color: #E8D95F;
+    font-size: 14px;
+    font-weight: 300;
+    text-transform: none;
+}
+
+.locker+label,
+.locker:checked+label {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url("/static/img/icons/locked.svg") no-repeat 0 0;
+    cursor: pointer;
+}
+
+.locker+label {
+    background: url("/static/img/icons/unlocked.svg") no-repeat 0 0;
 }
 
 .block__label {
@@ -147,11 +180,15 @@ label * {
 
 .block__label input,
 .block__label select {
-    width: 120px;
+    width: 124px;
     border: 1px solid var(--grey_dd);
     margin-left: 5px;
     padding: 4px;
     font-size: 0.9em;
+}
+
+.red {
+    border: 1px solid red;
 }
 
 
@@ -169,6 +206,8 @@ label * {
     width: 30px;
     height: 30px;
 }
+
+
 
 input:disabled,
 select:disabled {

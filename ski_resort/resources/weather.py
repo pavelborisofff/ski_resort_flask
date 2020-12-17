@@ -28,6 +28,24 @@ class Valrisk(Resource):
         return {'message': NOT_FOUND.format(obj=cls.__name__, name=1)}, 404
 
     @classmethod
+    def update(cls, data: dict) -> (dict, int):
+        item_loads = cls.schema.load(data)
+
+        item = cls.model.find_by_id(_id=1)
+
+        if item:
+            try:
+                item.update(data)
+                return {'item': {k: v for k, v in cls.schema.dump(item_loads).items() if v},
+                        'message': SUCCESSFULLY_UPDATED.format(obj=cls.__name__, name=1)}, 201
+            except Exception as e:
+                return {'item': {k: v for k, v in cls.schema.dump(item_loads).items() if v},
+                        'message': ERROR_DATABASE.format(err=e),
+                        'error': e}, 500
+
+        return {"message": NOT_FOUND.format(obj=cls.__name__, name=1)}, 404
+
+    @classmethod
     def post(cls) -> (dict, int):
 
         valrisk_json = request.get_json()

@@ -32,9 +32,13 @@
                         <div class="closed-desc flex"><small>наверх</small><small>вниз</small></div>
                     </div>
                     <!-- <div class="table__cell hours">Время работы</div> -->
-                    <div class="table__cell night">Вечернее<br>катание</div>
+                    <div class="table__cell night">Ночное катание</div>
                     <div class="table__cell state">Состояние</div>
-                    <div class="table__cell winter">Лето</div>
+                    <div class="table__cell flex">
+                        <input type="checkbox" id="lifts__locker" class="locker" onclick="switch_disable(this.checked, 'winter-check')" checked>
+                        <label for="lifts__locker" class="locker__icon"></label>
+                        <span>Лето</span>
+                    </div>
                     <div class="table__cell change">Последнее изменение</div>
                 </div>
                 <!-- LIFTS GENERATED  -->
@@ -68,6 +72,16 @@
                     </div>
                     <!-- NIGHT  -->
                     <div class="table__cell night flex">
+                        <input type="checkbox"
+                               class="night"
+                               onclick="switch_night(this.checked, '{{ lift.id }}__night', '{{ lift.id }}__night_open_from', '{{ lift.id }}__night_open_till')"
+                               {% if lift.night == "on" %}checked{% endif %}>
+                        <input type="text"
+                               name="{{ lift.get('id') }}__night"
+                               id="{{ lift.get('id') }}__night"
+                               form="lifts"
+                               value="{{ lift.night }}"
+                               class="visually-hidden">
                         <!-- NIGHT OPEN FROM  -->
                         <input type="text"
                                name="{{ lift.get('id') }}__night_open_from"
@@ -106,7 +120,7 @@
                     <!-- SUMMER  -->
                     {% set summer = lift.get('summer') %}
                     <div class="table__cell winter flex">
-                        <input type="checkbox" name="{{ lift.get('id') }}__summer" id="{{ lift.get('id') }}__summer" {% if summer %}checked{% endif %}>
+                        <input type="checkbox" name="{{ lift.get('id') }}__summer" id="{{ lift.get('id') }}__summer" class="winter-check" {% if summer %}checked{% endif %} disabled>
                     </div>
                     <!-- UPDATED  -->
                     <div class="table__cell change">{{ lift.get('updated')|truncate(16, True, end='')|replace('-', '.')}} {{ lift.get('updated_by') }}</div>
@@ -115,4 +129,27 @@
             </div>
         </div>
     </main>
+    <script>
+    function switch_disable(check, elements) {
+        let inputs = document.getElementsByClassName(elements);
+        for(let i=0; i < inputs.length; i++) {
+            inputs[i].disabled = check;
+        }
+    }
+
+    function switch_night(f, night, from, till) {
+
+        var x = document.getElementById(night)
+
+        if (x.value === 'on') {
+            x.value = 'off'
+        } else {
+            x.value = 'on'
+        }
+
+        document.getElementById(from).disabled = !f;
+        document.getElementById(till).disabled = !f;
+    }
+
+    </script>
 {% endblock %}

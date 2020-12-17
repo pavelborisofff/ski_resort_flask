@@ -16,7 +16,7 @@
 }
 
 .name {
-    width: 15%;
+    width: 30%;
     margin-right: auto;
 }
 
@@ -27,12 +27,40 @@
 
 .close,
 .night {
-    width: 104px;
+    width: 130px;
+}
+
+input[type=checkbox].night {
+    width: 10px;
+    height: 10px;
 }
 
 .winter {
     width: 40px;
 }
+
+.winter span {
+    display: inline-block;
+}
+
+.locker+label,
+.locker:checked+label {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url("/static/img/icons/locked.svg") no-repeat 0 0;
+    cursor: pointer;
+    margin-right: 6px;
+}
+
+.locker+label {
+    background: url("/static/img/icons/unlocked.svg") no-repeat 0 0;
+}
+
+#lifts__locker {
+    display: none;
+}
+
 
 input[type=checkbox] {
     display: inline-block;

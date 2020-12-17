@@ -7,7 +7,7 @@ class ValriskModel(BaseModel):
     __tablename__ = 'valrisk'
 
     id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.String(80), default='-')
+    value = db.Column(db.Integer, default=0)
 
 
 class WeatherSourceModel(BaseModel):

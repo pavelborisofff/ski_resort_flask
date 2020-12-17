@@ -9,9 +9,10 @@
         <PARAMETERS datevaldeb="{{ date|truncate(10, True, end='') }}" datevalfin="{{ date|truncate(10, True, end='') }}" datemaj="{{ date }}">
             {% for point in values.weather[count] %}
             <AREA name="{{ point.name|title() }}{% if count > 0 %} J+{{ count }}{% endif %}" name_en="{{ point.name_en|title() }}" altitude="{{ point.height }}" reference="{{ point.name|title() }}">
-                <VALRISK>{{ point.snow_avalanche }}</VALRISK>
-                {% set librisk = {1: 'Безопасно', 2: 'Незначительно', 3: 'Средне', 4: 'Опасно', 5: 'Очень опасно', 0: 'Неизвестно' } %}
-                <LIBRISK>{{ librisk.get(point.snow_avalanche) }}</LIBRISK>
+                {% set valrisk = values.valrisk %}
+                <VALRISK>{{ valrisk }}</VALRISK>
+                {% set librisk = {1: 'Низкая', 2: 'Умеренная', 3: 'Значительная', 4: 'Высокая', 5: 'Экстремальная', 0: 'Отсутствует' } %}
+                <LIBRISK>{{ librisk.get(valrisk)|upper }}</LIBRISK>
                 <REAL_RISK>0</REAL_RISK>
                 <F_TEMPERATURE>{{ point.weather_temp }}</F_TEMPERATURE>
                 <C_TEMPERATURE>{{ point.weather_temp }}</C_TEMPERATURE>
@@ -36,7 +37,7 @@
                 <VISIBILITY>100</VISIBILITY>
                 <SKY>{{ point.weather_sky }}</SKY>
                 <SKY_AFT>{{ point.weather_sky_day }}</SKY_AFT>
-                {% set sky_id = {'СОЛНЦЕ': 1, 'СОЛНЕЧНО': 2, 'ОБЛАЧНО': 3, 'ПАСМУРНО': 4, 'ДОЖДЬ': 5, 'СНЕГ': 6, 'БУРЯ': 7, 'None': 0} %}
+                {% set sky_id = {'СОЛНЦЕ': 1, 'СОЛНЕЧНО': 2, 'ОБЛАЧНО': 3, 'ПАСМУРНО': 4, 'ДОЖДЬ': 5, 'СНЕГ': 6, 'БУРЯ': 7, 'НЕТ': 0} %}
                 <SKY_ID>{{ sky_id[point.weather_sky] }}</SKY_ID>
                 <SKY_ID_AFT>{{ sky_id[point.weather_sky] }}</SKY_ID_AFT>
                 <LAST_SNOW>{{  point.snow_date }}</LAST_SNOW>
