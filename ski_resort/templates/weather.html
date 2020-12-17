@@ -36,7 +36,7 @@
 <!--                    </label>-->
                     <!-- BUTTONS -->
                     <form id="weather" action="{{ url_for('page_weather', kind='local', name=name, day=day) }}" method="POST" class="main__buttons" onclick="console.log(fo)">
-                        <button class="main__button button reset-btn" type="reset" value="Отменить">Отменить</button>
+                        <a href="{{ url_for('page_weather', kind='local', name=name, day=day) }}" class="main__button button reset-btn" type="reset" value="Отменить">Отменить</a>
                         <button class="main__button button reset-btn" type="submit" value="Сохранить">Сохранить</button>
                     </form>
                 </div>
