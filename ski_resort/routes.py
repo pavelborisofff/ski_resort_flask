@@ -70,7 +70,7 @@ def main(app):
 
         return redirect(url_for('page_weather', kind='local', name='Роза Долина', day=0))
 
-    @app.route('/<string:kind>/<string:name>/<int:day>',  methods=['POST', 'GET', 'PUT'])
+    @app.route('/<string:kind>/<string:name>/<int:day>',  methods=['POST', 'GET'])
     @login_required
     def page_weather(kind, name, day):
         valrisk = Valrisk.get()[0].get('value')
