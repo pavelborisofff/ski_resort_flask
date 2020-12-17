@@ -31,6 +31,18 @@ class WeatherModel(ResortItemModel):
     # Wind
     wind_velocity = db.Column(db.Integer, default=0)
     wind_direction = db.Column(db.String(20), default='-')
+    wind_velocity_day = db.Column(db.Integer, default=0)
+    wind_direction_day = db.Column(db.String(20), default='-')
+
+    # Snow
+    snow_state = db.Column(db.String(80), default='-')
+    snow_height = db.Column(db.Integer, default=0)
+    snow_height_new = db.Column(db.Integer, default=0)
+    snow_date = db.Column(db.String(20), default='-')
+    snow_avalanche = db.Column(db.Integer, default=0)
+
+    # Source
+    source = db.Column(db.String(20), default='yrno')
 
 
 class WeatherZeroModel(ResortItemModel):
@@ -56,6 +68,9 @@ class WeatherZeroModel(ResortItemModel):
     snow_height_new = db.Column(db.Integer, default=0)
     snow_date = db.Column(db.String(20), default='-')
     snow_avalanche = db.Column(db.Integer, default=0)
+
+    # # Source
+    # source = db.Column(db.String(20), default='yrno')
 
 
 class WeatherZeroLocalModel(WeatherZeroModel):

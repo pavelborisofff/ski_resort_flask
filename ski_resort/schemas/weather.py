@@ -41,10 +41,10 @@ class WeatherTwoLocalSchema(WeatherSchema):
 class WeatherThreeLocalSchema(WeatherSchema):
     class Meta(WeatherSchema.Meta):
         model = WeatherThreeLocalModel
-        dump_only = ('snow_state', 'snow_height', 'snow_height_new',
-                     'snow_date', 'snow_avalanche')
-        load_only = ('snow_state', 'snow_height', 'snow_height_new',
-                     'snow_date', 'snow_avalanche')
+        # dump_only = ('snow_state', 'snow_height', 'snow_height_new',
+        #              'snow_date', 'snow_avalanche')
+        # load_only = ('snow_state', 'snow_height', 'snow_height_new',
+        #              'snow_date', 'snow_avalanche')
 
 
 class WeatherZeroYrnoSchema(WeatherSchema):
@@ -65,7 +65,7 @@ class WeatherTwoYrnoSchema(WeatherSchema):
 class WeatherThreeYrnoSchema(WeatherSchema):
     class Meta(WeatherSchema.Meta):
         model = WeatherThreeYrnoModel
-        dump_only = ('snow_state', 'snow_height', 'snow_height_new',
-                     'snow_date', 'snow_avalanche')
-        load_only = ('snow_state', 'snow_height', 'snow_height_new',
-                     'snow_date', 'snow_avalanche')
+        # dump_only = ('snow_state', 'snow_height', 'snow_height_new',
+        #              'snow_date', 'snow_avalanche')
+        # load_only = ('snow_state', 'snow_height', 'snow_height_new',
+        #              'snow_date', 'snow_avalanche')
