@@ -70,7 +70,7 @@ def main(app):
 
         return redirect(url_for('page_weather', kind='local', name='Роза Долина', day=0))
 
-    @app.route('/<string:kind>/<string:name>/<int:day>',  methods=['POST', 'GET'])
+    @app.route('/<string:kind>/<string:name>/<int:day>',  methods=['POST', 'GET', 'PUT'])
     @login_required
     def page_weather(kind, name, day):
         valrisk = Valrisk.get()[0].get('value')
@@ -81,16 +81,11 @@ def main(app):
         weather_local = Weather.get('local', name, day)[0]
 
         if weather_local.get('source') == 'local':
-            snow = weather
-        else:
-            snow = weather_local  # yrno
-
+            weather = weather_local
 
         if request.method == 'POST':
 
-            # if kind == 'yrno':
-            #     weather = snow.copy()
-
+            print(request.form)
             for field, value in request.form.items():
 
                 if value:
@@ -100,16 +95,29 @@ def main(app):
 
                 if value != weather_local.get(field):
                     data = {field: value, 'updated_by': current_user.name}
+                    print(data)
                     Weather.update('local', name, day, data=data)
 
                     if field == 'snow_avalanche':
                         data = {'value': value}
                         Valrisk.update(data)
 
+                    if field == 'source':
+                        data = {'source': value}
+                        Weather.update('yrno', name, day, data=data)
+
+            print(weather_local.get('source'))
+            print(request.form.get('source'))
+            if weather_local.get('source') == 'yrno' and request.form.get('source') == 'local':
+                put_from_yrno = ['weather_sky', 'weather_temp', 'weather_sky_day', 'weather_temp_day',
+                                 'wind_velocity', 'wind_direction', 'wind_velocity_day', 'wind_direction_day']
+                data = {k: v for k, v in weather.items() if k in put_from_yrno}
+                Weather.update('local', name, day, data=data)
+
             return redirect(url_for('page_weather', kind='local', name=name, day=day))
 
-        return render_template('weather.html', name=name, weather=weather, snow=snow, day=day, kind=kind,
-                               valrisk=valrisk, dates=dates)
+        return render_template('weather.html', name=name, weather_local=weather_local, weather=weather,
+                               day=day, kind=kind, snow=weather_local, valrisk=valrisk, dates=dates)
 
     @app.route('/login', methods=['POST', 'GET'])
     def login():
@@ -166,7 +174,21 @@ def main(app):
     @app.route('/russia-russia-local.xml')
     @app.route('/xml')
     def xml():
-        weather = [WeatherDay.get('local', i)[0]['weatherday'] for i in range(4)]
+
+        weather = []
+        for i in range(4):
+            weather_local = WeatherDay.get('local', i)[0]['weatherday']
+            weather_yrno = WeatherDay.get('yrno', i)[0]['weatherday']
+            from_yrno = ['weather_sky', 'weather_temp', 'weather_sky_day', 'weather_temp_day',
+                         'wind_velocity', 'wind_direction', 'wind_velocity_day', 'wind_direction_day']
+
+            for j, point in enumerate(weather_local):
+                if point.get('source') == 'yrno':
+
+                    for key in from_yrno:
+                        weather_local[j][key] = weather_yrno[j].get(key, 0)
+
+            weather.append(weather_local)
 
         dates = []
         for i in range(4):

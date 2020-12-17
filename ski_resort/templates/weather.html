@@ -105,6 +105,7 @@
                     <article class="weather__block block sky flex">
                         <div class="block__heading flex">
                             <h4>Прогноз</h4>
+<!--                            {{ weather.source }}-->
                             <!-- SIDE BUTTONS  -->
                             <div class="block__buttons flex">
                                 <!-- YRNO SWITCHER  -->
@@ -127,8 +128,8 @@
 <!--                                <label for="weather__locker" class="locker__icon"></label>-->
 <!--                                <a href="{{ url_for('page_weather', kind='yrno', name=name, day=day) }}" class="block__button">Взять с yr.no</a>-->
                                 <!-- WEATHER LOCKER  -->
-                                <input type="checkbox" id="weather__locker" class="locker disabled" onclick="switch_disable(this.checked, 'weather-input')" checked disabled>
-                                <label id="locker__icon" for="weather__locker" class="locker__icon disabled"></label>
+                                <input type="checkbox" id="weather__locker" class="locker {% if weather.source == 'yrno' %}disabled{% endif %}" onclick="switch_disable(this.checked, 'weather-input')" checked {% if weather.source == 'yrno' %}disabled{% endif %}>
+                                <label id="locker__icon" for="weather__locker" class="locker__icon {% if weather.source == 'yrno' %}disabled{% endif %}"></label>
                             </div>
                         </div>
                         <!-- SKY TEMP before 12 -->

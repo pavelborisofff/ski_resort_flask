@@ -201,6 +201,7 @@ class Weather(Resource):
             return result
 
         weather = cls.model.find_by_name(name=name)
+        # print(kind, name, day, weather.)
 
         if weather:
             schema = cls.obj_choice[kind]['schema_list'][day]()

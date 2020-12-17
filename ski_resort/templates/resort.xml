@@ -8,6 +8,7 @@
         {% set count = loop.index - 1 %}
         <PARAMETERS datevaldeb="{{ date|truncate(10, True, end='') }}" datevalfin="{{ date|truncate(10, True, end='') }}" datemaj="{{ date }}">
             {% for point in values.weather[count] %}
+
             <AREA name="{{ point.name|title() }}{% if count > 0 %} J+{{ count }}{% endif %}" name_en="{{ point.name_en|title() }}" altitude="{{ point.height }}" reference="{{ point.name|title() }}">
                 {% set valrisk = values.valrisk %}
                 <VALRISK>{{ valrisk }}</VALRISK>
