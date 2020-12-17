@@ -134,7 +134,7 @@
                         <!-- TEMP before 12  -->
                         <label class="block__label flex">
                             <div class="item__desc">Температура до 12:00, °С</div>
-                            <input type="number" name="weather_temp" id="weather_temp" form="weather"  value="{{ weather.get('weather_temp') }}" class="temperature weather-input" {% if kind == 'local' %}disabled{% endif %}>
+                            <input type="number" name="weather_temp" id="weather_temp" form="weather"  value="{{ weather.get('weather_temp', 0) }}" class="temperature weather-input" {% if kind == 'local' %}disabled{% endif %}>
                         </label>
                         {% if day < 3 %}
                         <!-- SKY TEMP after 12 -->
@@ -158,7 +158,7 @@
                         <!-- TEMP after 12  -->
                         <label class="block__label flex">
                             <div class="item__desc">Температура до 12:00, °С</div>
-                            <input type="number" name="weather_temp_day" form="weather"  id="weather_temp_day" value="{{ weather.get('weather_temp_day') }}" class="temperature weather-input" {% if kind == 'local' %}disabled{% endif %}>
+                            <input type="number" name="weather_temp_day" form="weather"  id="weather_temp_day" value="{{ weather.get('weather_temp_day', 0) }}" class="temperature weather-input" {% if kind == 'local' %}disabled{% endif %}>
                         </label>
                         {% endif %}
                         <!-- WIND  -->

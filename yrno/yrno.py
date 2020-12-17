@@ -270,7 +270,7 @@ def send_to_api(_name: str, _weather: dict, _day: int,
         _json = _weather[_day]
         _response = session.put(url, json=_json)
 
-        logger.info(_response.json().get('item'))
+        logger.info('{} {} {}'.format(_name, _day, _response.json().get('item')))
 
         if _response.status_code != 201:
             # logger.error(f'{_name} error: {_response.status_code} - {_response.json()} {traceback.format_exc()}')
