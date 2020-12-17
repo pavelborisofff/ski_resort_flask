@@ -157,7 +157,7 @@ def compare_hours(utc_time: str) -> bool:
         return True  # Because yr.no send current point_weather in first index
 
 
-def get_weather_conds(_data: dict) -> list[Union[str, int]]:
+def get_weather_conds(_data: dict) -> list:
     """
     Get point_weather data structured yr.no json
     :param _data: {'time': '2020-12-12T19:00:00Z', 'data': {'instant': {'details': {'air_pressure_at_sea_level': 17.0}}}}
@@ -172,7 +172,7 @@ def get_weather_conds(_data: dict) -> list[Union[str, int]]:
     ]
 
 
-def get_strftime(diff_to_utc: int = -3) -> list[str]:
+def get_strftime(diff_to_utc: int = -3) -> list:
     """
     Generate keys to search exactly time periods into yr.no data
     :param diff_to_utc:
@@ -212,7 +212,8 @@ def get_strftime(diff_to_utc: int = -3) -> list[str]:
             return hours_ranges[hour_range]
 
 
-def get_point_weather(_weather_data: list[dict]) -> dict[Union[int, dict]]:
+# def get_point_weather(_weather_data: list[dict]) -> dict[Union[int, dict]]:
+def get_point_weather(_weather_data: list):
     """
     Parse point's weather from yr.no by exactly time periods
     :param _weather_data: {'time': '2020-12-13T07:00:00Z', 'data': {…}}, {'time': '2020-12-13T08:00:00Z', 'data': {…}}]
@@ -245,7 +246,7 @@ def get_point_weather(_weather_data: list[dict]) -> dict[Union[int, dict]]:
     return _point_weather
 
 
-def send_to_api(_name: str, _weather: dict[dict], _day: int,
+def send_to_api(_name: str, _weather: dict, _day: int,
                 api_url: str = 'http://localhost',
                 port: int = 5001,
                 endpoint: str = '/api/weather/{kind}/{name}/{day}'):
