@@ -183,10 +183,12 @@
                         {% endif %}
                         <!-- WIND  -->
                         <h4 class="block__heading">Ветер</h4>
+                            <!-- WIND VELOCITY -->
                             <label class="block__label flex">
                                 <div class="item__desc">Скорость, м/с</div>
-                                <input type="number" name="wind_velocity" id="wind_velocity" form="weather"  value="{{ weather.get('wind_velocity') }}" class="weather-input" {% if kind == 'local' %}disabled{% endif %}>
+                                <input type="number" name="wind_velocity" id="wind_velocity" form="weather"  value="{{ weather.get('wind_velocity', 0) }}" class="weather-input" {% if kind == 'local' %}disabled{% endif %}>
                             </label>
+                            <!-- WIND DIRECTION -->
                             <label class="block__label flex">
                                 <div class="item__desc">Направление</div>
                                 {% set direction = weather.get('wind_direction') %}
