@@ -171,7 +171,7 @@
 }
 
 .hours {
-    width: 15%;
+    width: 124px;
     margin-left: 5px;
 }
 
@@ -197,7 +197,7 @@
 }
 
 .time:disabled {
-    background-color: #E8DC4D;
+    background-color: var(--grey_dd);
 }
 
 input[type=checkbox].night {

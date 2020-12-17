@@ -13,6 +13,7 @@ class BaseModel(db.Model):
             db.session.commit()
         except:
             db.session.rollback()
+            db.session.flush()
             raise
         finally:
             db.session.close()
@@ -29,6 +30,7 @@ class BaseModel(db.Model):
             db.session.commit()
         except:
             db.session.rollback()
+            db.session.flush()
             raise
         finally:
             db.session.close()

@@ -25,14 +25,18 @@
     text-align: center;
 }
 
-.close,
+/*.close,*/
+/*.night {*/
+/*    width: 104px;*/
+/*}*/
+
 .night {
-    width: 130px;
+    width: 124px;
 }
 
 input[type=checkbox].night {
-    width: 10px;
-    height: 10px;
+    width: 13px;
+    height: 13px;
 }
 
 .winter {

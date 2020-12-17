@@ -29,7 +29,7 @@
                     <div class="table__cell open">Открытие</div>
                     <div class="table__cell close">
                         <span>Посадка до:</span><br>
-                        <div class="closed-desc flex"><small>наверх</small><small>вниз</small></div>
+                        <div class="closed-desc flex"><small>наверх</small>&nbsp;&nbsp;&nbsp;<small>вниз</small></div>
                     </div>
                     <!-- <div class="table__cell hours">Время работы</div> -->
                     <div class="table__cell night">Ночное катание</div>
@@ -89,7 +89,8 @@
                                placeholder="{{ lift.get('night_open_from') }}"
                                class="time"
                                form="lifts"
-                               max="5">
+                               max="5"
+                               {% if lift.night == "off" %}disabled{% endif %}>
                         <!-- NIGHT OPEN TILL  -->
                         <input type="text"
                                name="{{ lift.get('id') }}__night_open_till"
@@ -97,7 +98,8 @@
                                placeholder="{{ lift.get('open_till') }}"
                                class="time"
                                form="lifts"
-                               max="5">
+                               max="5"
+                               {% if lift.night == "off" %}disabled{% endif %}>
                     </div>
                     <!-- STATE  -->
                     <div class="table__cell state">
