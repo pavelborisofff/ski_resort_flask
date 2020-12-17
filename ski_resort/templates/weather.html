@@ -36,7 +36,7 @@
 <!--                    </label>-->
                     <!-- BUTTONS -->
                     <form id="weather" action="{{ url_for('page_weather', kind='local', name=name, day=day) }}" method="POST" class="main__buttons" onclick="console.log(fo)">
-                        <a href="{{ url_for('page_weather', kind='local', name=name, day=day) }}" class="main__button button reset-btn" type="reset" value="Отменить">Отменить</a>
+                        <a href="{{ url_for('page_weather', kind=kind, name=name, day=day) }}" class="main__button button reset-btn" type="reset" value="Отменить">Отменить</a>
                         <button class="main__button button reset-btn" type="submit" value="Сохранить">Сохранить</button>
                     </form>
                 </div>
@@ -243,6 +243,8 @@
         let x = document.getElementById(source);
         let locker = document.getElementById('weather__locker');
         let locker_icon = document.getElementById('locker__icon');
+        // let posting_url = document.getElementById('weather');
+
 
         if (x.value === 'yrno') {
             x.value = 'local'
@@ -261,9 +263,11 @@
             }
             locker.classList.add('disabled');
             locker_icon.classList.add('disabled');
+            // posting_url.action = posting_url.action.replace('local', 'yrno');
         } else {
             locker.classList.remove('disabled');
             locker_icon.classList.remove('disabled');
+            // posting_url.action = posting_url.action.replace('yrno', 'local');
         }
     }
 

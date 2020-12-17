@@ -74,21 +74,22 @@ def main(app):
     @login_required
     def page_weather(kind, name, day):
         valrisk = Valrisk.get()[0].get('value')
-        weather = Weather.get('yrno', name, day)[0]
-        weather_local = Weather.get('local', name, day)[0]
-
         dates = [datetime.datetime.strftime(datetime.datetime.now().date() + datetime.timedelta(days=i), '%d.%m.%Y')
                  for i in range(4)]
 
-        if kind == 'local':
-            snow = weather.copy()
+        weather = Weather.get('yrno', name, day)[0]
+        weather_local = Weather.get('local', name, day)[0]
+
+        if weather_local.get('source') == 'local':
+            snow = weather
         else:
-            snow = Weather.get('local', name, day)[0]
+            snow = weather_local  # yrno
+
 
         if request.method == 'POST':
 
-            if kind == 'yrno':
-                weather = snow.copy()
+            # if kind == 'yrno':
+            #     weather = snow.copy()
 
             for field, value in request.form.items():
 
@@ -97,7 +98,7 @@ def main(app):
                 else:
                     value = '-'
 
-                if value != weather.get(field):
+                if value != weather_local.get(field):
                     data = {field: value, 'updated_by': current_user.name}
                     Weather.update('local', name, day, data=data)
 
