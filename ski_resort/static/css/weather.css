@@ -171,6 +171,16 @@ snow-input::placeholder {
     background: url("/static/img/icons/unlocked.svg") no-repeat 0 0;
 }
 
+.locker+label.disabled {
+    background: url("/static/img/icons/locked_gray.svg") no-repeat 0 0;
+    cursor: default;
+}
+
+
+.disabled {
+    cursor: default;
+}
+
 .block__label {
     padding: 10px 20px;
     font-size: 0.9em;
@@ -187,10 +197,14 @@ snow-input::placeholder {
     font-size: 0.9em;
 }
 
-.red {
-    border: 1px solid red;
+.yrno {
+    margin: auto 15px auto 5px;
 }
 
+.yrno-label {
+    text-transform: none;
+    font-weight: normal;
+}
 
 .snow,
 .sky {

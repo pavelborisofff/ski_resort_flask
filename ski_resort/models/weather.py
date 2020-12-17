@@ -70,7 +70,7 @@ class WeatherZeroModel(ResortItemModel):
     snow_avalanche = db.Column(db.Integer, default=0)
 
     # # Source
-    # source = db.Column(db.String(20), default='yrno')
+    source = db.Column(db.String(20), default='yrno')
 
 
 class WeatherZeroLocalModel(WeatherZeroModel):

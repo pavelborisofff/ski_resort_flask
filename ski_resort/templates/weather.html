@@ -105,11 +105,30 @@
                     <article class="weather__block block sky flex">
                         <div class="block__heading flex">
                             <h4>Прогноз</h4>
+                            <!-- SIDE BUTTONS  -->
                             <div class="block__buttons flex">
-                                <a href="{{ url_for('page_weather', kind='yrno', name=name, day=day) }}" class="block__button">Взять с yr.no</a>
-                                <input type="checkbox" id="weather__locker" class="locker" onclick="switch_disable(this.checked, 'weather-input')"
-                                       {% if kind == 'local' %}checked{% endif %}>
-                                <label for="weather__locker" class="locker__icon"></label>
+                                <!-- YRNO SWITCHER  -->
+                                <label class="yrno-label" for="yrno_checker">yr.no</label>
+                                <input type="checkbox"
+                                       class="yrno"
+                                       id="yrno_checker"
+                                       onclick="switch_source(this.checked, 'source')"
+                                       {% if weather.source == 'yrno' %}checked{% endif %}>
+                                <input type="text"
+                                       name="source"
+                                       id="source"
+                                       form="weather"
+                                       value="{{ weather.source }}"
+                                       class="visually-hidden">
+<!--                                &lt;!&ndash; YRNO UPDATER  &ndash;&gt;-->
+<!--                                <input type="checkbox" name="{{ weather.get('id') }}__source" id="{{ weather.get('id') }}__source" class="source-check" {% if weather.source == 'yrno' %}checked{% endif %}>-->
+<!--                                <input type="checkbox" id="yrno__locker" class="locker" onclick="switch_disable(this.checked, 'weather-input')"-->
+<!--                                       {% if kind == 'local' %}checked{% endif %}>-->
+<!--                                <label for="weather__locker" class="locker__icon"></label>-->
+<!--                                <a href="{{ url_for('page_weather', kind='yrno', name=name, day=day) }}" class="block__button">Взять с yr.no</a>-->
+                                <!-- WEATHER LOCKER  -->
+                                <input type="checkbox" id="weather__locker" class="locker disabled" onclick="switch_disable(this.checked, 'weather-input')" checked disabled>
+                                <label id="locker__icon" for="weather__locker" class="locker__icon disabled"></label>
                             </div>
                         </div>
                         <!-- SKY TEMP before 12 -->
@@ -183,7 +202,7 @@
         </div>
     </main>
 <script>
-    var inputs = document.querySelectorAll('select');
+    let inputs = document.querySelectorAll('select');
     let inputDict = [];
 
     function makeDict(list) {
@@ -197,7 +216,7 @@
 
     makeDict(inputs)
 
-    console.log(inputDict)
+    // console.log(inputDict)
 
     function switch_disable(check, elements) {
         let inputs = document.getElementsByClassName(elements);
@@ -207,8 +226,8 @@
     }
 
     function change_src(select, imgId) {
-        console.log(select.id)
-        console.log(inputDict[select.id])
+        // console.log(select.id)
+        // console.log(inputDict[select.id])
         if (select.value === inputDict[select.id]) {
 
         } else {
@@ -218,28 +237,36 @@
         document.getElementById(imgId).src = encodeURI('/static/img/weather_icons/' + select.value + '.svg');
 
     }
-//     $('#countrySelect').change(function() {
-//   if ($(this).val()) $(this).css('background', 'red');
-//   else $(this).css('background', '#e9ece5');
-// })
 
+     function switch_source(f, source) {
+
+        let x = document.getElementById(source);
+        let locker = document.getElementById('weather__locker');
+        let locker_icon = document.getElementById('locker__icon');
+
+        if (x.value === 'yrno') {
+            x.value = 'local'
+        } else {
+            x.value = 'yrno'
+        }
+
+        // console.log(locker)
+        locker.disabled = f;
+
+        if (f) {
+            locker.checked = true;
+            let inputs = document.getElementsByClassName('weather-input');
+            for(let i=0; i < inputs.length; i++) {
+                inputs[i].disabled = f;
+            }
+            locker.classList.add('disabled');
+            locker_icon.classList.add('disabled');
+        } else {
+            locker.classList.remove('disabled');
+            locker_icon.classList.remove('disabled');
+        }
+    }
 
 </script>
-<!--    <script>-->
-<!--        let dsb = document.querySelectorAll(".dsb");-->
 
-<!--        function yrno(f) {-->
-<!--         if (f.checked) {-->
-<!--            for (var i = 0; i < dsb.length; i++) {-->
-<!--                    dsb[i].disabled = true-->
-<!--                };-->
-<!--            // document.getElementById("snow__depth").disabled = true;-->
-<!--        }  else {-->
-<!--            for (var i = 0; i < dsb.length; i++) {-->
-<!--                    dsb[i].disabled = false-->
-<!--                };-->
-<!--        //  document.getElementById("snow__depth").disabled = false;-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
 {% endblock %}

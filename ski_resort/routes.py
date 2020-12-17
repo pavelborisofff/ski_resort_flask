@@ -74,7 +74,8 @@ def main(app):
     @login_required
     def page_weather(kind, name, day):
         valrisk = Valrisk.get()[0].get('value')
-        weather = Weather.get(kind, name, day)[0]
+        weather = Weather.get('yrno', name, day)[0]
+        weather_local = Weather.get('local', name, day)[0]
 
         dates = [datetime.datetime.strftime(datetime.datetime.now().date() + datetime.timedelta(days=i), '%d.%m.%Y')
                  for i in range(4)]
