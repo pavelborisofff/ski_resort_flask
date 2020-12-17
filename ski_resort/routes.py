@@ -85,7 +85,6 @@ def main(app):
 
         if request.method == 'POST':
 
-            print(request.form)
             for field, value in request.form.items():
 
                 if value:
@@ -95,7 +94,6 @@ def main(app):
 
                 if value != weather_local.get(field):
                     data = {field: value, 'updated_by': current_user.name}
-                    print(data)
                     Weather.update('local', name, day, data=data)
 
                     if field == 'snow_avalanche':
@@ -106,8 +104,6 @@ def main(app):
                         data = {'source': value}
                         Weather.update('yrno', name, day, data=data)
 
-            print(weather_local.get('source'))
-            print(request.form.get('source'))
             if weather_local.get('source') == 'yrno' and request.form.get('source') == 'local':
                 put_from_yrno = ['weather_sky', 'weather_temp', 'weather_sky_day', 'weather_temp_day',
                                  'wind_velocity', 'wind_direction', 'wind_velocity_day', 'wind_direction_day']
