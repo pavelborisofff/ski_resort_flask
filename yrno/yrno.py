@@ -6,7 +6,7 @@ import traceback
 
 from typing import Union
 
-from .tech import init_logger
+from tech import init_logger
 
 # SETTINGS
 TZ = 3  # Difference between local and UTC time, hours
@@ -261,12 +261,16 @@ def send_to_api(_name: str, _weather: dict, _day: int,
     :return: True in case completed update info via API
     """
 
+
+
     # url = f'{api_url}:{port}{endpoint.format(kind="yrno", name=_name, day=_day)}'
     url = '{}:{}{}'.format(api_url, port, endpoint.format(kind="yrno", name=_name, day=_day))
 
     try:
-        _json = _weather
+        _json = _weather[_day]
         _response = session.put(url, json=_json)
+
+        logger.info(_response.json().get('item'))
 
         if _response.status_code != 201:
             # logger.error(f'{_name} error: {_response.status_code} - {_response.json()} {traceback.format_exc()}')
@@ -278,7 +282,7 @@ def send_to_api(_name: str, _weather: dict, _day: int,
     except:
         logger.error('uncaught exception: {}'.format(traceback.format_exc()))
 
-
+r = None
 def main():
     # Preparation to operate
     # logger = init_logger('yrno.py')
@@ -325,8 +329,9 @@ def main():
         for day, weather in data.items():
             result = send_to_api(name, data, day, API_URL, API_PORT, ENDPOINT)
 
-            if result:
-                logger.info(name, day, weather)
+            # TODO: check the warnings
+            # if result:
+            #     logger.info(name, day, weather)
 
 
 if __name__ == '__main__':
