@@ -52,8 +52,8 @@
                         <!-- SNOW STATE -->
                         <label class="block__label flex ">
                             <div class="item__desc">Состояние</div>
-                            {% set current_snow_state = snow.get('snow_state', '-') %}
-                            {% set snow_states = ['ОТСУТСТВИЕ СНЕГА', 'СВЕЖИЙ', 'РЫХЛЫЙ', 'ВЕСЕННИЙ', '-'] %}
+                            {% set current_snow_state = snow.get('snow_state', 'ОТСУТСТВУЕТ') %}
+                            {% set snow_states = ['ОТСУТСТВУЕТ', 'СВЕЖЕВЫПАВШИЙ', 'ТВЁРДЫЙ', 'ВЕСЕННИЙ', 'МЯГКИЙ', 'ВЛАЖНЫЙ'] %}
                             <select name="snow_state" id="snow_state" form="weather" class="select snow-input" disabled>
                                 {% for snow_state in snow_states %}
                                 <option value="{{ snow_state.upper() }}" {% if current_snow_state.upper() == snow_state %}selected{% endif %}>{{ snow_state.upper() }}</option>
